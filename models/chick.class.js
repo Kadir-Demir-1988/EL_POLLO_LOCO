@@ -1,8 +1,8 @@
 class Chick extends MovableObject {
-
+    y = 390;
     width = 50;
     height = 50;
-    y = 390;
+
 
     IMAGES_WALKING = [
         "img_pollo_locco/img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
@@ -14,33 +14,50 @@ class Chick extends MovableObject {
         "img_pollo_locco/img/3_enemies_chicken/chicken_small/2_dead/dead.png"
     ];
 
+    offset = {
+        top: 0,
+        bottom: -10,
+        left: -30,
+        right: -30,
+    };
+
     constructor() {
         super().loadImage(
             "img_pollo_locco/img/3_enemies_chicken/chicken_small/1_walk/1_w.png"
         );
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_DEAD);
         this.x = 350 + Math.random() * 500;
-        this.speed = 0.7 * Math.random() * 0.5;
+        this.speed = 0.8 * Math.random() * 0.5;
         this.animate();
+        this.isDead = false;
     }
 
-    drawFrame(ctx) {
-        ctx.beginPath();
-        ctx.lineWidth = "1";
-        ctx.strokeStyle = "blue"; 
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.stroke();
-    }
+
 
     animate() {
         setInterval(() => {
-          this.moveLeft();
+            this.moveLeft();
         }, 1000 / 60);
-    
+
         setInterval(() => {
-          this.playAnimation(this.IMAGES_WALKING);
+            this.playAnimation(this.IMAGES_WALKING);
         }, 200);
-      }
+    }
+
+
+
+    die() {
+        // Stoppt die Bewegung des Gegners sofort
+        this.speed = 0;
+
+        // Spielt die Todesanimation ab und bewegt das Objekt nach einer Verzögerung aus dem sichtbaren Bereich
+        this.playAnimation(this.IMAGES_DEAD);
+
+        setTimeout(() => {
+            this.y = -1000; // Bewegt das Objekt aus dem sichtbaren Bereich
+        }, 500); // 500ms Verzögerung, bevor das Objekt verschwindet
+    }
 
 
 

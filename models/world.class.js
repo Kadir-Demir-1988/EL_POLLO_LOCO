@@ -12,6 +12,10 @@ class World {
   bottleBar = new Bottlebar();
   coinBar = new Coinbar();
   throwableObjects = [];
+  coins_sound = new Audio('audio/coins.mp3');
+  bottle_sound = new Audio("audio/bottle.mp3");
+
+
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -29,7 +33,10 @@ class World {
   run() {
     setInterval(() => {
       this.checkCollisions();
+      this.collectingCoins();
+      this.collectingBottles();
       this.checkThrowObjects();
+      this.checkEnemyCollision();
     }, 200);
   }
 
@@ -66,7 +73,7 @@ class World {
     this.ctx.translate(this.camera_x, 0);
 
     this.addToMap(this.character);
-    this.addObjectsToMap(this.level.coins); // Zeichnet die Münzen im Spiel
+    this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.endboss);
@@ -107,8 +114,57 @@ class World {
   }
 
   flipImageBack(mo) {
-    
+
     this.ctx.restore();
     mo.x = mo.x * -1;
   }
+
+  collectingCoins() {
+    this.level.coins.forEach((coin, i) => {
+      if (this.character.isColliding(coin)) {
+        this.character.collectCoin();
+        this.coins_sound.play();
+        this.level.coins.splice(i, 1);
+        this.coinBar.setPercantage(this.character.amountOfCoins);
+      }
+    });
+  }
+
+
+  collectingBottles() {
+    this.level.bottles.forEach((bottle, i) => {
+      if (this.character.isColliding(bottle)) {
+        this.character.collectBottle();
+        this.bottle_sound.play();
+        this.level.bottles.splice(i, 1);
+        this.bottleBar.setPercantage(this.character.amountOfBottle)
+      }
+    })
+  }
+
+  checkEnemyCollision() {
+    this.level.enemies.forEach(enemy => {
+      if (this.character.isColliding(enemy)) {
+        console.log("Kollision erkannt"); // Überprüfung, ob die Kollision erkannt wird
+  
+        // Prüfen, ob der Charakter von oben auf den Gegner springt
+        if (this.character.y + this.character.height - this.character.offset.bottom < enemy.y + enemy.offset.top + 30) {
+          console.log("Charakter springt auf den Gegner"); // Sollte in der Konsole erscheinen, wenn die Bedingung erfüllt ist
+          this.character.jumpOn(enemy); // Charakter besiegt den Gegner
+        } else {
+          console.log("Seitliche oder untere Kollision");
+          this.character.hit(); // Charakter erleidet nur Schaden, wenn die Bedingung für den Sprung auf den Gegner nicht erfüllt ist
+        }
+      }
+    });
+  }
+  
+
+
+
+
+
+
+
+
 }

@@ -9,13 +9,7 @@ class Bottle extends DrawableObject {
     right: 25,
   };
 
-  drawFrame(ctx) {
-    ctx.beginPath();
-    ctx.lineWidth = "2 ";
-    ctx.strokeStyle = "yellow"; 
-    ctx.rect(this.x, this.y, this.width, this.height);
-    ctx.stroke();
-}
+
 
   constructor(imagePath, x, y) {
     super().loadImage(imagePath);

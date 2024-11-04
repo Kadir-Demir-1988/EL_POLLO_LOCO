@@ -1,5 +1,7 @@
 class Coin extends MovableObject {
 
+
+
     height = 100;
     width = 100;
 
@@ -9,13 +11,13 @@ class Coin extends MovableObject {
     ];
 
     offset = {
-        top: 45,
-        bottom: 90,
-        left: 45,
-        right: 45,
+        top: 20,
+        bottom: 20,
+        left: 20,
+        right: 20,
     };
 
-
+    // coin_sound = new Audio('audio/coins.mp3');
 
     constructor(x, y) {
         super().loadImage("img_pollo_locco/img/8_coin/coin_2.png");
@@ -25,13 +27,7 @@ class Coin extends MovableObject {
         this.animate();
     }
 
-    drawFrame(ctx) {
-        ctx.beginPath();
-        ctx.lineWidth = "2 ";
-        ctx.strokeStyle = "red"; 
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.stroke();
-    }
+    
 
 
     animate() {
@@ -39,4 +35,9 @@ class Coin extends MovableObject {
             this.playAnimation(this.IMAGES);
         }, 400);
     }
-}
+
+    
+
+
+
+} 

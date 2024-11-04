@@ -43,6 +43,14 @@ class Character extends MovableObject {
   ];
 
   world;
+
+  offset = {
+    top: 80,
+    bottom: 10,
+    left: 10,
+    right: 10,
+  };
+
   walking_sound = new Audio("audio/walking.mp3");
 
   constructor() {
@@ -100,4 +108,12 @@ class Character extends MovableObject {
     this.speedY = 25;
     this.isJumping = true; // Setzt isJumping auf true, sobald gesprungen wird
   }
+
+  jumpOn(enemy) {
+    enemy.die();
+  }
+
+
+
+
 }
