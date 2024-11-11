@@ -4,6 +4,8 @@ class Character extends MovableObject {
   width = 140;
   speed = 10;
   isJumping = false;
+  lastStep;
+
 
   IMAGES_WALKING = [
     "img_pollo_locco/img/2_character_pepe/2_walk/W-21.png",
@@ -42,13 +44,39 @@ class Character extends MovableObject {
     "img_pollo_locco/img/2_character_pepe/4_hurt/H-43.png",
   ];
 
+  IMAGES_IDLE = [
+    "img_pollo_locco/img/2_character_pepe/1_idle/idle/I-1.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/idle/I-2.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/idle/I-3.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/idle/I-4.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/idle/I-5.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/idle/I-6.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/idle/I-7.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/idle/I-8.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/idle/I-9.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/idle/I-10.png",
+  ];
+
+  IMAGES_SLEEP = [
+    "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-11.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-12.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-13.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-14.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-15.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-16.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-17.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-18.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-19.png",
+    "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-20.png",
+  ];
+
   world;
 
   offset = {
-    top: 80,
-    bottom: 10,
-    left: 10,
-    right: 10,
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   };
 
   walking_sound = new Audio("audio/walking.mp3");
@@ -59,8 +87,12 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_JUMPING);
     this.loadImages(this.IMAGES_DEAD);
     this.loadImages(this.IMAGES_HURT);
+    this.loadImages(this.IMAGES_IDLE);
+    this.loadImages(this.IMAGES_SLEEP);
     this.applyGravity();
     this.animate();
+    this.pepeIdleModus();
+    this.pepeLongIdle();
   }
 
   animate() {
@@ -105,12 +137,31 @@ class Character extends MovableObject {
   }
 
   jump() {
+
     this.speedY = 25;
     this.isJumping = true; // Setzt isJumping auf true, sobald gesprungen wird
   }
 
   jumpOn(enemy) {
     enemy.die();
+  }
+
+  pepeIdleModus() {
+    setInterval(() => {
+      let timeSinceLastAction = new Date().getTime() - this.lastActionTime;
+      if (timeSinceLastAction > 3000) {
+        this.playAnimation(this.IMAGES_IDLE);
+      }
+    }, 400);
+  }
+
+  pepeLongIdle() {
+    setInterval(() => {
+      let timeSinceLastAction = new Date().getTime() - this.lastActionTime;
+      if (timeSinceLastAction > 10000) {
+        this.playAnimation(this.IMAGES_SLEEP);
+      }
+    }, 400);
   }
 
 

@@ -14,6 +14,7 @@ class World {
   throwableObjects = [];
   coins_sound = new Audio('audio/coins.mp3');
   bottle_sound = new Audio("audio/bottle.mp3");
+  hurt_sound = new Audio("audio/hurt.mp3");
 
 
 
@@ -36,7 +37,6 @@ class World {
       this.collectingCoins();
       this.collectingBottles();
       this.checkThrowObjects();
-      this.checkEnemyCollision();
     }, 200);
   }
 
@@ -50,14 +50,38 @@ class World {
     }
   }
 
+ 
+
   checkCollisions() {
-    this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
-        this.character.hit();
-        this.statusBar.setPercentage(this.character.energy);
+    this.level.enemies.forEach((enemy, i) => {
+      if (this.characterJumpToKill(enemy)) {
+        enemy.lost(); // Besiegt den Gegner
+        enemy.isSplicable = true; // Markiert den Gegner zum Entfernen
+      } else if (this.characterCollidingWithEnemies(enemy)) {
+        this.characterGetsHurt(); // Verursacht Schaden für Pepe
+      }
+
+      // Entfernt besiegte Gegner aus dem Array
+      if (enemy.isSplicable) {
+        this.level.enemies.splice(i, 1);
       }
     });
   }
+
+  characterJumpToKill(enemy) {
+    return this.character.isColliding(enemy) && this.character.isAboveGround();
+  }
+
+  characterCollidingWithEnemies(enemy) {
+    return this.character.isColliding(enemy) && enemy.energy > 0;
+  }
+
+  characterGetsHurt() {
+    this.character.hit();
+    this.hurt_sound.play();
+    this.statusBar.setPercantage(this.character.energy);
+  }
+
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -146,7 +170,7 @@ class World {
     this.level.enemies.forEach(enemy => {
       if (this.character.isColliding(enemy)) {
         console.log("Kollision erkannt"); // Überprüfung, ob die Kollision erkannt wird
-  
+
         // Prüfen, ob der Charakter von oben auf den Gegner springt
         if (this.character.y + this.character.height - this.character.offset.bottom < enemy.y + enemy.offset.top + 30) {
           console.log("Charakter springt auf den Gegner"); // Sollte in der Konsole erscheinen, wenn die Bedingung erfüllt ist
@@ -158,7 +182,7 @@ class World {
       }
     });
   }
-  
+
 
 
 

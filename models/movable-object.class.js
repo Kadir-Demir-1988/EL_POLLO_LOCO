@@ -77,6 +77,10 @@ class MovableObject extends DrawableObject {
     return this.energy == 0;
   }
 
+  lost() {
+    return this.energy = 0;
+}
+
   /**
    *
    * @param {Array} arr - ["img/Image1.png", "img/image2.png", ...]
@@ -90,14 +94,17 @@ class MovableObject extends DrawableObject {
 
   moveRight() {
     this.x += this.speed;
+    this.lastActionTime = new Date().getTime(); // Timer zurücksetzen
   }
 
   moveLeft() {
     this.x -= this.speed;
+    this.lastActionTime = new Date().getTime(); // Timer zurücksetzen
   }
 
   jump() {
     this.speedY = 30;
+    this.lastActionTime = new Date().getTime(); // Timer zurücksetzen
   }
 
   jumpOn(enemy) {

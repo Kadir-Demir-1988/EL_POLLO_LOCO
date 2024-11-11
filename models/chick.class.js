@@ -15,11 +15,11 @@ class Chick extends MovableObject {
     ];
 
     offset = {
-        top: 0,
-        bottom: -10,
-        left: -30,
-        right: -30,
-    };
+        top: -20,
+        bottom: 0,
+        left: -40,
+        right: -40,
+      };
 
     constructor() {
         super().loadImage(
