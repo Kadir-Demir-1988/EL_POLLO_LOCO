@@ -92,6 +92,20 @@ class MovableObject extends DrawableObject {
     this.currentImage++;
   }
 
+  playOnce(images) {
+    this.currentImage = 0; // Startet die Animation am Anfang
+  
+    const animationInterval = setInterval(() => {
+      if (this.currentImage < images.length) {
+        let path = images[this.currentImage];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+      } else {
+        clearInterval(animationInterval); // Stoppt das Intervall nach dem letzten Bild
+      }
+    }, 100); // Zeitintervall anpassen
+  }
+
   moveRight() {
     this.x += this.speed;
     this.lastActionTime = new Date().getTime(); // Timer zurücksetzen

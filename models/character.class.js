@@ -7,6 +7,7 @@ class Character extends MovableObject {
   lastStep;
 
 
+
   IMAGES_WALKING = [
     "img_pollo_locco/img/2_character_pepe/2_walk/W-21.png",
     "img_pollo_locco/img/2_character_pepe/2_walk/W-22.png",
@@ -93,6 +94,7 @@ class Character extends MovableObject {
     this.animate();
     this.pepeIdleModus();
     this.pepeLongIdle();
+
   }
 
   animate() {
@@ -158,11 +160,13 @@ class Character extends MovableObject {
   pepeLongIdle() {
     setInterval(() => {
       let timeSinceLastAction = new Date().getTime() - this.lastActionTime;
-      if (timeSinceLastAction > 10000) {
+      if (timeSinceLastAction > 7000) {
         this.playAnimation(this.IMAGES_SLEEP);
       }
     }, 400);
   }
+
+
 
 
 

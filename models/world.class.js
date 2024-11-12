@@ -44,29 +44,52 @@ class World {
     if (this.keyboard.D) {
       let bottle = new ThrowableObject(
         this.character.x + 100,
-        this.character.y + 100
+        this.character.y + 100,
+        this.character
       );
       this.throwableObjects.push(bottle);
     }
   }
 
- 
-
   checkCollisions() {
+    this.checkCharacterEnemyCollisions();
+    this.checkBottleEnemyCollisions();
+  }
+
+  checkCharacterEnemyCollisions() {
     this.level.enemies.forEach((enemy, i) => {
       if (this.characterJumpToKill(enemy)) {
-        enemy.lost(); // Besiegt den Gegner
-        enemy.isSplicable = true; // Markiert den Gegner zum Entfernen
+        enemy.lost();
+        enemy.isSplicable = true;
       } else if (this.characterCollidingWithEnemies(enemy)) {
-        this.characterGetsHurt(); // Verursacht Schaden für Pepe
+        this.characterGetsHurt();
       }
 
-      // Entfernt besiegte Gegner aus dem Array
       if (enemy.isSplicable) {
         this.level.enemies.splice(i, 1);
       }
     });
   }
+
+  checkBottleEnemyCollisions() {
+    this.throwableObjects.forEach((bottle, i) => {
+      this.level.enemies.forEach((enemy, j) => {
+        if (bottle.isColliding(enemy)) {
+          bottle.splash(); // Startet die Splash-Animation
+          enemy.isSplicable = true; // Markiert den Gegner zur Entfernung
+        }
+      });
+
+      // Entfernt die Flasche, wenn sie zur Entfernung markiert wurde
+      if (bottle.isSplicable) {
+        this.throwableObjects.splice(i, 1);
+      }
+    });
+
+    // Entfernt Gegner, die zur Entfernung markiert sind
+    this.level.enemies = this.level.enemies.filter(enemy => !enemy.isSplicable);
+  }
+
 
   characterJumpToKill(enemy) {
     return this.character.isColliding(enemy) && this.character.isAboveGround();
@@ -165,30 +188,5 @@ class World {
       }
     })
   }
-
-  checkEnemyCollision() {
-    this.level.enemies.forEach(enemy => {
-      if (this.character.isColliding(enemy)) {
-        console.log("Kollision erkannt"); // Überprüfung, ob die Kollision erkannt wird
-
-        // Prüfen, ob der Charakter von oben auf den Gegner springt
-        if (this.character.y + this.character.height - this.character.offset.bottom < enemy.y + enemy.offset.top + 30) {
-          console.log("Charakter springt auf den Gegner"); // Sollte in der Konsole erscheinen, wenn die Bedingung erfüllt ist
-          this.character.jumpOn(enemy); // Charakter besiegt den Gegner
-        } else {
-          console.log("Seitliche oder untere Kollision");
-          this.character.hit(); // Charakter erleidet nur Schaden, wenn die Bedingung für den Sprung auf den Gegner nicht erfüllt ist
-        }
-      }
-    });
-  }
-
-
-
-
-
-
-
-
 
 }
