@@ -2,7 +2,7 @@ class Chick extends MovableObject {
     y = 390;
     width = 50;
     height = 50;
-
+    chick_sound = new Audio("audio/chick.mp3");
 
     IMAGES_WALKING = [
         "img_pollo_locco/img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
@@ -17,9 +17,9 @@ class Chick extends MovableObject {
     offset = {
         top: -20,
         bottom: 0,
-        left: -40,
-        right: -40,
-      };
+        left: -30,
+        right: -30,
+    };
 
     constructor() {
         super().loadImage(
@@ -33,8 +33,6 @@ class Chick extends MovableObject {
         this.isDead = false;
     }
 
-
-
     animate() {
         setInterval(() => {
             this.moveLeft();
@@ -45,20 +43,15 @@ class Chick extends MovableObject {
         }, 200);
     }
 
-
-
     die() {
-        // Stoppt die Bewegung des Gegners sofort
-        this.speed = 0;
-
-        // Spielt die Todesanimation ab und bewegt das Objekt nach einer Verzögerung aus dem sichtbaren Bereich
-        this.playAnimation(this.IMAGES_DEAD);
-
+        if (this.isDead) return;
+        this.isDead = true;
+        this.speed = 0; 
+        this.chick_sound.play();
+        this.img = this.imageCache[this.IMAGES_DEAD[0]]; 
+       
         setTimeout(() => {
-            this.y = -1000; // Bewegt das Objekt aus dem sichtbaren Bereich
-        }, 500); // 500ms Verzögerung, bevor das Objekt verschwindet
+            this.y = -1000; 
+        }, 1000);
     }
-
-
-
 }

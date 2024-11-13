@@ -9,8 +9,6 @@ class Bottle extends DrawableObject {
     right: 25,
   };
 
-
-
   constructor(imagePath, x, y) {
     super().loadImage(imagePath);
     this.x = x + Math.random() * 500;

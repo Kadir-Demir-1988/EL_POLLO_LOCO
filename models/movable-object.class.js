@@ -34,13 +34,22 @@ class MovableObject extends DrawableObject {
     }
   }
 
-  // character.isColliding(chicken);
+  // isColliding(mo) {
+  //   return (this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+  //     this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+  //     this.x + this.offset.left < mo.x + mo.offset.right &&
+  //     this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom)
+  // }
+
   isColliding(mo) {
-    return (this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
-      this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
-      this.x + this.offset.left < mo.x + mo.offset.right &&
-      this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom)
+    return (
+      this.x + this.width - this.offset.right > mo.x + mo.offset.left && // Rechte Kante der Flasche nach rechts
+      this.x + this.offset.left < mo.x + mo.width - mo.offset.right && // Linke Kante der Flasche nach links
+      this.y + this.height - this.offset.bottom > mo.y + mo.offset.top && // Untere Kante der Flasche nach unten
+      this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom // Obere Kante der Flasche nach oben
+    );
   }
+  
 
   collectCoin() {
     this.amountOfCoins += 10;
@@ -55,8 +64,6 @@ class MovableObject extends DrawableObject {
       this.amountOfBottle = 100;
     }
   }
-
-
 
   hit() {
     this.energy -= 5;
@@ -93,7 +100,7 @@ class MovableObject extends DrawableObject {
   }
 
   playOnce(images) {
-    this.currentImage = 0; // Startet die Animation am Anfang
+    this.currentImage = 0;
   
     const animationInterval = setInterval(() => {
       if (this.currentImage < images.length) {
@@ -101,33 +108,29 @@ class MovableObject extends DrawableObject {
         this.img = this.imageCache[path];
         this.currentImage++;
       } else {
-        clearInterval(animationInterval); // Stoppt das Intervall nach dem letzten Bild
+        clearInterval(animationInterval);
       }
-    }, 100); // Zeitintervall anpassen
+    }, 100);
   }
 
   moveRight() {
     this.x += this.speed;
-    this.lastActionTime = new Date().getTime(); // Timer zurücksetzen
+    this.lastActionTime = new Date().getTime(); 
   }
 
   moveLeft() {
     this.x -= this.speed;
-    this.lastActionTime = new Date().getTime(); // Timer zurücksetzen
+    this.lastActionTime = new Date().getTime(); 
   }
 
   jump() {
     this.speedY = 30;
-    this.lastActionTime = new Date().getTime(); // Timer zurücksetzen
+    this.lastActionTime = new Date().getTime(); 
   }
 
   jumpOn(enemy) {
-    console.log("Charakter springt auf den Gegner"); // Debugging-Ausgabe
     enemy.die();
   }
-
-
-
 }
 
 

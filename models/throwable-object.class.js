@@ -39,9 +39,8 @@ class ThrowableObject extends MovableObject {
     }
     
     this.applyGravity();
-    // Speichert das Intervall in `this.throwInterval`
     this.throwInterval = setInterval(() => {
-      this.x += 10; // Horizontale Bewegung der Flasche
+      this.x += 10; 
     }, 50);
   }
   
@@ -50,40 +49,26 @@ class ThrowableObject extends MovableObject {
   animateRotation() {
     this.rotationInterval = setInterval(() => {
       this.playAnimation(this.IMAGES_BOTTLE_ROTATION);
-    }, 100); // Zeitintervall für die Rotation
+    }, 100); 
   }
   
 
   splash() {
     if (this.hasSplashed) return;
     this.hasSplashed = true;
-  
     this.speedY = 0;
     this.speedX = 0;
     this.acceleration = 0;
     this.applyGravity = () => {};
-    clearInterval(this.throwInterval); // Stoppt die horizontale Bewegung
-    clearInterval(this.rotationInterval); // Stoppt die Rotationsanimation
-  
-    this.playOnce(this.IMAGES_BOTTLE_SPLASH); // Spielt die Splash-Animation einmal ab
+    clearInterval(this.throwInterval);
+    clearInterval(this.rotationInterval); 
+    this.playOnce(this.IMAGES_BOTTLE_SPLASH); 
   
     setTimeout(() => {
       this.isSplicable = true;
     }, this.IMAGES_BOTTLE_SPLASH.length * 100);
   }
-  
-  
-  
-  
-
-
-
-
-
-
-
-
-  // Methode zum Zeichnen des Rahmens um die Flasche
+   
   drawFrame(ctx) {
     // Blauer Rahmen für die Flasche selbst
     ctx.beginPath();

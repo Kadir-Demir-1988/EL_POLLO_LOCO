@@ -128,7 +128,7 @@ class Character extends MovableObject {
         if (!this.isJumping) {
           this.isJumping = true;
         }
-        this.playAnimation(this.IMAGES_JUMPING); // Spielt die Sprunganimation kontinuierlich ab
+        this.playOnce(this.IMAGES_JUMPING); 
       } else {
         this.isJumping = false;
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
@@ -141,7 +141,7 @@ class Character extends MovableObject {
   jump() {
 
     this.speedY = 25;
-    this.isJumping = true; // Setzt isJumping auf true, sobald gesprungen wird
+    this.isJumping = true;
   }
 
   jumpOn(enemy) {

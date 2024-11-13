@@ -11,10 +11,13 @@ class World {
   statusBar = new StatusBar();
   bottleBar = new Bottlebar();
   coinBar = new Coinbar();
+  endbossBar = new Endbossbar();
   throwableObjects = [];
   coins_sound = new Audio('audio/coins.mp3');
   bottle_sound = new Audio("audio/bottle.mp3");
   hurt_sound = new Audio("audio/hurt.mp3");
+
+
 
 
 
@@ -59,36 +62,39 @@ class World {
   checkCharacterEnemyCollisions() {
     this.level.enemies.forEach((enemy, i) => {
       if (this.characterJumpToKill(enemy)) {
-        enemy.lost();
-        enemy.isSplicable = true;
+        enemy.die(); 
+        setTimeout(() => { 
+          enemy.isSplicable = true;
+        }, 1000);
       } else if (this.characterCollidingWithEnemies(enemy)) {
         this.characterGetsHurt();
       }
-
-      if (enemy.isSplicable) {
-        this.level.enemies.splice(i, 1);
-      }
     });
+
+    this.level.enemies = this.level.enemies.filter(enemy => !enemy.isSplicable);
   }
 
   checkBottleEnemyCollisions() {
     this.throwableObjects.forEach((bottle, i) => {
       this.level.enemies.forEach((enemy, j) => {
         if (bottle.isColliding(enemy)) {
-          bottle.splash(); // Startet die Splash-Animation
-          enemy.isSplicable = true; // Markiert den Gegner zur Entfernung
+          bottle.splash(); 
+          enemy.die();
+          setTimeout(() => { 
+            enemy.isSplicable = true;
+          }, 1000);
         }
       });
 
-      // Entfernt die Flasche, wenn sie zur Entfernung markiert wurde
       if (bottle.isSplicable) {
         this.throwableObjects.splice(i, 1);
       }
     });
 
-    // Entfernt Gegner, die zur Entfernung markiert sind
     this.level.enemies = this.level.enemies.filter(enemy => !enemy.isSplicable);
   }
+
+
 
 
   characterJumpToKill(enemy) {
@@ -112,11 +118,10 @@ class World {
     this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
     this.ctx.translate(-this.camera_x, 0);
-
     this.addToMap(this.statusBar);
     this.addToMap(this.bottleBar);
     this.addToMap(this.coinBar);
-    //enemiebar
+    this.addToMap(this.endbossBar);
     this.ctx.translate(this.camera_x, 0);
 
     this.addToMap(this.character);
@@ -161,7 +166,6 @@ class World {
   }
 
   flipImageBack(mo) {
-
     this.ctx.restore();
     mo.x = mo.x * -1;
   }
@@ -176,7 +180,6 @@ class World {
       }
     });
   }
-
 
   collectingBottles() {
     this.level.bottles.forEach((bottle, i) => {
