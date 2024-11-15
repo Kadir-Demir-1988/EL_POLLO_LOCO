@@ -17,10 +17,6 @@ class World {
   bottle_sound = new Audio("audio/bottle.mp3");
   hurt_sound = new Audio("audio/hurt.mp3");
 
-
-
-
-
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -28,6 +24,7 @@ class World {
     this.draw();
     this.setWorld();
     this.run();
+    console.log("Endboss in World:", this.endboss);
   }
 
   setWorld() {
@@ -40,17 +37,33 @@ class World {
       this.collectingCoins();
       this.collectingBottles();
       this.checkThrowObjects();
+      this.checkEndbossHealth();
     }, 200);
+  }
+
+  checkEndbossHealth() {
+    const endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
+    if (endboss) {
+      this.endbossBar.setPercantage(endboss.health);
+    } else {
+      console.log("Endboss nicht gefunden");
+    }
   }
 
   checkThrowObjects() {
     if (this.keyboard.D) {
-      let bottle = new ThrowableObject(
-        this.character.x + 100,
-        this.character.y + 100,
-        this.character
-      );
-      this.throwableObjects.push(bottle);
+      if (this.character.amountOfBottle > 0) {
+        let bottle = new ThrowableObject(
+          this.character.x + 100,
+          this.character.y + 100,
+          this.character
+        );
+        this.throwableObjects.push(bottle);
+        this.character.amountOfBottle--;
+        this.bottleBar.setPercantage((this.character.amountOfBottle / 10) * 100);
+      } else {
+        this.bottleBar.shake();
+      }
     }
   }
 
@@ -62,27 +75,28 @@ class World {
   checkCharacterEnemyCollisions() {
     this.level.enemies.forEach((enemy, i) => {
       if (this.characterJumpToKill(enemy)) {
-        enemy.die(); 
-        setTimeout(() => { 
+        enemy.die();
+        setTimeout(() => {
           enemy.isSplicable = true;
         }, 1000);
       } else if (this.characterCollidingWithEnemies(enemy)) {
         this.characterGetsHurt();
       }
     });
-
     this.level.enemies = this.level.enemies.filter(enemy => !enemy.isSplicable);
   }
 
   checkBottleEnemyCollisions() {
     this.throwableObjects.forEach((bottle, i) => {
-      this.level.enemies.forEach((enemy, j) => {
+      this.level.enemies.forEach((enemy) => {
         if (bottle.isColliding(enemy)) {
-          bottle.splash(); 
-          enemy.die();
-          setTimeout(() => { 
-            enemy.isSplicable = true;
-          }, 1000);
+          if (!bottle.collidedWith[enemy.id]) {
+            bottle.splash(enemy);
+            enemy.takeDamage(20);
+            if (enemy instanceof Endboss) {
+              this.endbossBar.setPercantage(enemy.health);
+            }
+          }
         }
       });
 
@@ -90,12 +104,7 @@ class World {
         this.throwableObjects.splice(i, 1);
       }
     });
-
-    this.level.enemies = this.level.enemies.filter(enemy => !enemy.isSplicable);
   }
-
-
-
 
   characterJumpToKill(enemy) {
     return this.character.isColliding(enemy) && this.character.isAboveGround();
@@ -111,7 +120,6 @@ class World {
     this.statusBar.setPercantage(this.character.energy);
   }
 
-
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
@@ -123,16 +131,12 @@ class World {
     this.addToMap(this.coinBar);
     this.addToMap(this.endbossBar);
     this.ctx.translate(this.camera_x, 0);
-
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.level.enemies);
-    this.addObjectsToMap(this.level.endboss);
     this.addObjectsToMap(this.throwableObjects);
     this.ctx.translate(-this.camera_x, 0);
-
-    // Draw() wird immer wieder aufgerufen
     let self = this;
     requestAnimationFrame(function () {
       self.draw();
@@ -149,10 +153,8 @@ class World {
     if (mo.otherDirection) {
       this.flipImage(mo);
     }
-
     mo.draw(this.ctx);
     mo.drawFrame(this.ctx);
-
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }
@@ -184,12 +186,12 @@ class World {
   collectingBottles() {
     this.level.bottles.forEach((bottle, i) => {
       if (this.character.isColliding(bottle)) {
-        this.character.collectBottle();
+        this.character.amountOfBottle++; 
         this.bottle_sound.play();
         this.level.bottles.splice(i, 1);
-        this.bottleBar.setPercantage(this.character.amountOfBottle)
+        this.bottleBar.setPercantage((this.character.amountOfBottle / 10) * 100); 
       }
-    })
+    });
   }
 
 }

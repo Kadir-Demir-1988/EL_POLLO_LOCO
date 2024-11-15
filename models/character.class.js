@@ -4,7 +4,8 @@ class Character extends MovableObject {
   width = 140;
   speed = 10;
   isJumping = false;
-  lastStep;
+  amountOfCoins = 0;
+  amountOfBottle = 0;
 
 
 
@@ -164,6 +165,20 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_SLEEP);
       }
     }, 400);
+  }
+
+  collectCoin() {
+    this.amountOfCoins += 10;
+    if (this.amountOfCoins > 100) {
+      this.amountOfCoins = 100;
+    }
+  }
+
+  collectBottle() {
+    this.amountOfBottle += 10;
+    if (this.amountOfBottle > 100) {
+      this.amountOfBottle = 100;
+    }
   }
 
 

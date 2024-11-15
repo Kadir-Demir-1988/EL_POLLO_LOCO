@@ -1,8 +1,5 @@
 const level1 = new Level(
-  [new Chicken(), new Chicken(), new Chick(), new Chick()],
-
-
-  [new Endboss()],
+  [new Chicken(), new Chicken(), new Chick(), new Chick(), new Endboss()],
 
   [new Cloud()],
   [
@@ -104,7 +101,7 @@ const level1 = new Level(
 
   [
     new Bottle('img_pollo_locco/img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 200, 350),
-    new Bottle('img_pollo_locco/img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 110, 360),
+    new Bottle('img_pollo_locco/img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 210, 360),
     new Bottle('img_pollo_locco/img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 130, 355),
     new Bottle('img_pollo_locco/img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 190, 350),
     new Bottle('img_pollo_locco/img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 270, 370),
@@ -113,8 +110,6 @@ const level1 = new Level(
     new Bottle('img_pollo_locco/img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 710, 365),
     new Bottle('img_pollo_locco/img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 840, 360),
     new Bottle('img_pollo_locco/img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 950, 370),
-    new Bottle('img_pollo_locco/img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 1400, 355),
-    new Bottle('img_pollo_locco/img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 1540, 360),
-    new Bottle('img_pollo_locco/img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 1700, 350)
+
   ]
 );

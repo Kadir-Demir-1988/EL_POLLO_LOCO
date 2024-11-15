@@ -4,8 +4,7 @@ class MovableObject extends DrawableObject {
   speedY = 0;
   acceleration = 2;
   energy = 100;
-  amountOfCoins = 0;
-  amountOfBottle = 0;
+ 
   lastHit = 0;
 
   offset = {
@@ -34,12 +33,7 @@ class MovableObject extends DrawableObject {
     }
   }
 
-  // isColliding(mo) {
-  //   return (this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
-  //     this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
-  //     this.x + this.offset.left < mo.x + mo.offset.right &&
-  //     this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom)
-  // }
+ 
 
   isColliding(mo) {
     return (

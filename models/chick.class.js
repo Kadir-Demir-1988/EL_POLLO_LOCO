@@ -2,6 +2,7 @@ class Chick extends MovableObject {
     y = 390;
     width = 50;
     height = 50;
+    health = 20;
     chick_sound = new Audio("audio/chick.mp3");
 
     IMAGES_WALKING = [
@@ -43,15 +44,23 @@ class Chick extends MovableObject {
         }, 200);
     }
 
+    takeDamage(amount) {
+        this.health = Math.max(0, this.health - amount);
+        if (this.health === 0) {
+            console.log(`${this.constructor.name} stirbt.`);
+            this.die();
+        }
+    }
+
     die() {
         if (this.isDead) return;
         this.isDead = true;
-        this.speed = 0; 
+        this.speed = 0;
         this.chick_sound.play();
-        this.img = this.imageCache[this.IMAGES_DEAD[0]]; 
-       
+        this.img = this.imageCache[this.IMAGES_DEAD[0]];
+
         setTimeout(() => {
-            this.y = -1000; 
+            this.y = -1000;
         }, 1000);
     }
 }

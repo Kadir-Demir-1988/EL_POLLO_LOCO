@@ -2,6 +2,7 @@ class Endboss extends MovableObject {
   height = 375;
   width = 250;
   y = 80;
+  health = 100;
 
   IMAGES_WALKING = [
     "img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -44,6 +45,13 @@ class Endboss extends MovableObject {
     "img_pollo_locco/img/4_enemie_boss_chicken/5_dead/G26.png",
   ];
 
+  offset = {
+    top: 20,
+    bottom: 20,
+    left: 30,
+    right: 30
+};
+
   constructor() {
     super().loadImage(this.IMAGES_WALKING[0]);
     this.loadImages(this.IMAGES_WALKING);
@@ -52,7 +60,24 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEAD);
     this.x = 2700;
+    this.id = "endboss";
     this.animate();
+  }
+
+  takeDamage(amount) {
+    console.log("Endboss erleidet Schaden:", amount);
+    this.health = Math.max(0, this.health - amount);
+    if (this.health === 0) {
+        console.log("Endboss ist besiegt!");
+        this.die();
+    }
+}
+
+
+  die() {
+    console.log("Endboss ist besiegt!");
+    this.speed = 0; // Bewegt sich nicht mehr
+    this.playOnce(this.IMAGES_DEAD); // Spielt die Todesanimation ab
   }
 
   animate() {

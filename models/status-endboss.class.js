@@ -9,6 +9,13 @@ class Endbossbar extends DrawableObject {
         "img_pollo_locco/img/7_statusbars/2_statusbar_endboss/green/green100.png",
     ];
 
+    offset = {
+        top: 10,
+        bottom: 20,
+        left: 30,
+        right: 30
+    };
+
 
     percentage = 100;
 
@@ -24,13 +31,13 @@ class Endbossbar extends DrawableObject {
 
 
     setPercantage(percentage) {
-        this.percentage = percentage;
+        this.percentage = Math.max(0, percentage); // Stellt sicher, dass der Wert nicht negativ wird
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
     resolveImageIndex() {
-        if (this.percentage == 100) {
+        if (this.percentage >= 100) {
             return 5;
         } else if (this.percentage > 80) {
             return 4;
@@ -44,23 +51,6 @@ class Endbossbar extends DrawableObject {
             return 0;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

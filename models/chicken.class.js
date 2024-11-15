@@ -2,6 +2,7 @@ class Chicken extends MovableObject {
   y = 380;
   height = 60;
   width = 90;
+  health = 20;
   chicken_sound = new Audio("audio/chicken.mp3");
 
   IMAGES_WALKING = [
@@ -35,23 +36,28 @@ class Chicken extends MovableObject {
 
   animate() {
     setInterval(() => {
-      this.moveLeft();
+        this.moveLeft();
+        this.playAnimation(this.IMAGES_WALKING);
     }, 1000 / 60);
+}
 
-    setInterval(() => {
-      this.playAnimation(this.IMAGES_WALKING);
-    }, 200);
+  takeDamage(amount) {
+    this.health = Math.max(0, this.health - amount);
+    if (this.health === 0) {
+      console.log(`${this.constructor.name} stirbt.`);
+      this.die();
+    }
   }
 
   die() {
-    if (this.isDead) return; 
+    if (this.isDead) return;
     this.isDead = true;
     this.speed = 0;
     this.chicken_sound.play();
-    this.img = this.imageCache[this.IMAGES_DEAD[0]]; 
-    
+    this.img = this.imageCache[this.IMAGES_DEAD[0]];
+
     setTimeout(() => {
-      this.y = -1000; 
+      this.y = -1000;
     }, 1000);
   }
 
