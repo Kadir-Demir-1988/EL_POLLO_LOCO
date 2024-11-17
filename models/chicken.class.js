@@ -36,15 +36,17 @@ class Chicken extends MovableObject {
 
   animate() {
     setInterval(() => {
-        this.moveLeft();
-        this.playAnimation(this.IMAGES_WALKING);
+      this.moveLeft();
     }, 1000 / 60);
-}
+
+    setInterval(() => {
+      this.playAnimation(this.IMAGES_WALKING);
+    }, 200);
+  }
 
   takeDamage(amount) {
     this.health = Math.max(0, this.health - amount);
     if (this.health === 0) {
-      console.log(`${this.constructor.name} stirbt.`);
       this.die();
     }
   }

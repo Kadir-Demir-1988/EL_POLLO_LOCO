@@ -24,7 +24,7 @@ class World {
     this.draw();
     this.setWorld();
     this.run();
-    console.log("Endboss in World:", this.endboss);
+
   }
 
   setWorld() {
@@ -41,14 +41,18 @@ class World {
     }, 200);
   }
 
-  checkEndbossHealth() {
+  checkEndbossHealth() {   
+    
     const endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
-    if (endboss) {
-      this.endbossBar.setPercantage(endboss.health);
-    } else {
-      console.log("Endboss nicht gefunden");
+    if(endboss){
+      if (endboss.energy > 0) {
+        this.endbossBar.setPercantage(endboss.energy);
+      } else {
+        this.endbossBar.setPercantage(0);
+      } 
     }
   }
+
 
   checkThrowObjects() {
     if (this.keyboard.D) {
@@ -94,8 +98,9 @@ class World {
             bottle.splash(enemy);
             enemy.takeDamage(20);
             if (enemy instanceof Endboss) {
-              this.endbossBar.setPercantage(enemy.health);
+              this.endbossBar.setPercantage(enemy.energy);
             }
+
           }
         }
       });
@@ -135,6 +140,7 @@ class World {
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.level.enemies);
+
     this.addObjectsToMap(this.throwableObjects);
     this.ctx.translate(-this.camera_x, 0);
     let self = this;
@@ -186,10 +192,10 @@ class World {
   collectingBottles() {
     this.level.bottles.forEach((bottle, i) => {
       if (this.character.isColliding(bottle)) {
-        this.character.amountOfBottle++; 
+        this.character.amountOfBottle++;
         this.bottle_sound.play();
         this.level.bottles.splice(i, 1);
-        this.bottleBar.setPercantage((this.character.amountOfBottle / 10) * 100); 
+        this.bottleBar.setPercantage((this.character.amountOfBottle / 10) * 100);
       }
     });
   }

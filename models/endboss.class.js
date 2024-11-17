@@ -2,7 +2,7 @@ class Endboss extends MovableObject {
   height = 375;
   width = 250;
   y = 80;
-  health = 100;
+  energy = 100;
 
   IMAGES_WALKING = [
     "img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -50,7 +50,7 @@ class Endboss extends MovableObject {
     bottom: 20,
     left: 30,
     right: 30
-};
+  };
 
   constructor() {
     super().loadImage(this.IMAGES_WALKING[0]);
@@ -61,32 +61,63 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_DEAD);
     this.x = 2700;
     this.id = "endboss";
+    this.energy = 100;
     this.animate();
   }
 
   takeDamage(amount) {
-    console.log("Endboss erleidet Schaden:", amount);
-    this.health = Math.max(0, this.health - amount);
-    if (this.health === 0) {
-        console.log("Endboss ist besiegt!");
-        this.die();
-    }
-}
-
-
-  die() {
-    console.log("Endboss ist besiegt!");
-    this.speed = 0; // Bewegt sich nicht mehr
-    this.playOnce(this.IMAGES_DEAD); // Spielt die Todesanimation ab
+    this.energy = Math.max(0, this.energy - amount); // Gesundheit reduzieren, aber nicht negativ
+    this.lastHit = new Date().getTime(); // Zeitpunkt des Treffers speichern
+    console.log(`Endboss nimmt Schaden: ${amount}. Gesundheit: ${this.energy}`);
   }
+
+
+  playHurt() {
+    console.log("Endboss erleidet Schaden!");
+    this.playAnimation(this.IMAGES_HURT); // Spielt die Hurt-Animation ab
+  }
+
+
+
+
+
 
   animate() {
     setInterval(() => {
-      this.moveLeft();
+      if (this.isDead()) {
+        this.die();
+      } else if (this.isHurt()) {
+        if (!this.isCurrentlyHurt) {
+          this.isCurrentlyHurt = true;
+          this.playOnce(this.IMAGES_HURT);
+          setTimeout(() => {
+            this.isCurrentlyHurt = false;
+          }, 500);
+        }
+      } else {
+        this.moveLeft();
+      }
     }, 1000 / 60);
 
     setInterval(() => {
-      this.playAnimation(this.IMAGES_WALKING);
+      if (!this.isHurt() && !this.isDead()) {
+        this.playAnimation(this.IMAGES_WALKING);
+      }
     }, 200);
   }
+
+  die() {
+    this.playOnce(this.IMAGES_DEAD); 
+
+    setTimeout(() => {
+      this.y = -1000; 
+      this.isSplicable = true; 
+    },1000); 
+  }
+
+
+
+
+
+
 }

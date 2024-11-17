@@ -69,10 +69,10 @@ class MovableObject extends DrawableObject {
   }
 
   isHurt() {
-    let timepassed = new Date().getTime() - this.lastHit; // Difference in ms
-    timepassed = timepassed / 1000; // difference in s
-    return timepassed < 1;
-  }
+    let timepassed = new Date().getTime() - this.lastHit;
+    return timepassed < 500; 
+}
+
 
   isDead() {
     return this.energy == 0;
