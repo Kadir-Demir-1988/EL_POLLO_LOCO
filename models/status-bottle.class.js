@@ -1,5 +1,4 @@
 class Bottlebar extends DrawableObject {
-
   emptyBottleSound = new Audio("audio/emptybottle.mp3");
 
   IMAGES = [
@@ -21,18 +20,15 @@ class Bottlebar extends DrawableObject {
     this.height = 50;
     this.width = 200;
     this.setPercantage(0);
-
   }
 
   shake() {
-    const originalX = this.x; // Ursprüngliche Position speichern
-    let offset = 10; // Bewegung nach links und rechts
+    const originalX = this.x;
+    let offset = 10;
     this.emptyBottleSound.play();
-
-    // Bewege die Statusbar nach links, dann rechts, dann zurück zur Ursprungsposition
-    setTimeout(() => { this.x = originalX - offset; }, 100); // Nach links
-    setTimeout(() => { this.x = originalX + offset; }, 200); // Nach rechts
-    setTimeout(() => { this.x = originalX; }, 300); // Zurück zur Ursprungsposition
+    setTimeout(() => { this.x = originalX - offset; }, 100);
+    setTimeout(() => { this.x = originalX + offset; }, 200);
+    setTimeout(() => { this.x = originalX; }, 300);
   }
 
   setPercantage(percentage) {

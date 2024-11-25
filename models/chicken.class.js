@@ -5,6 +5,7 @@ class Chicken extends MovableObject {
   health = 20;
   chicken_sound = new Audio("audio/chicken.mp3");
 
+
   IMAGES_WALKING = [
     "img_pollo_locco/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
     "img_pollo_locco/img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
@@ -29,9 +30,13 @@ class Chicken extends MovableObject {
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEAD);
     this.x = 700 + Math.random() * 500;
-    this.speed = 0.8 * Math.random() * 0.5;
+    this.speed = 1;
+    // this.move()
     this.animate();
+
     this.isDead = false;
+
+
   }
 
   animate() {

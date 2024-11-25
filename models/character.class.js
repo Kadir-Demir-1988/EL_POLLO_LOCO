@@ -6,6 +6,7 @@ class Character extends MovableObject {
   isJumping = false;
   amountOfCoins = 0;
   amountOfBottle = 0;
+  pepe_snore = new Audio("audio/snore.mp3");
 
 
 
@@ -75,7 +76,7 @@ class Character extends MovableObject {
   world;
 
   offset = {
-    top: 0,
+    top: 80,
     bottom: 0,
     left: 0,
     right: 0,
@@ -105,16 +106,19 @@ class Character extends MovableObject {
         this.moveRight();
         this.otherDirection = false;
         this.walking_sound.play();
+        this.pepe_snore.pause();
       }
 
       if (this.world.keyboard.LEFT && this.x > 0) {
         this.moveLeft();
         this.otherDirection = true;
         this.walking_sound.play();
+        this.pepe_snore.pause();
       }
 
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
+        this.pepe_snore.pause();
       }
 
       this.world.camera_x = -this.x + 100;
@@ -129,7 +133,7 @@ class Character extends MovableObject {
         if (!this.isJumping) {
           this.isJumping = true;
         }
-        this.playOnce(this.IMAGES_JUMPING); 
+        this.playOnce(this.IMAGES_JUMPING);
       } else {
         this.isJumping = false;
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
@@ -152,7 +156,7 @@ class Character extends MovableObject {
   pepeIdleModus() {
     setInterval(() => {
       let timeSinceLastAction = new Date().getTime() - this.lastActionTime;
-      if (timeSinceLastAction > 3000) {
+      if (timeSinceLastAction > 4000) {
         this.playAnimation(this.IMAGES_IDLE);
       }
     }, 400);
@@ -163,6 +167,7 @@ class Character extends MovableObject {
       let timeSinceLastAction = new Date().getTime() - this.lastActionTime;
       if (timeSinceLastAction > 7000) {
         this.playAnimation(this.IMAGES_SLEEP);
+        this.pepe_snore.play();
       }
     }, 400);
   }

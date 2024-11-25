@@ -41,15 +41,15 @@ class World {
     }, 200);
   }
 
-  checkEndbossHealth() {   
-    
+  checkEndbossHealth() {
+
     const endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
-    if(endboss){
+    if (endboss) {
       if (endboss.energy > 0) {
         this.endbossBar.setPercantage(endboss.energy);
       } else {
         this.endbossBar.setPercantage(0);
-      } 
+      }
     }
   }
 
@@ -60,7 +60,7 @@ class World {
         let bottle = new ThrowableObject(
           this.character.x + 100,
           this.character.y + 100,
-          this.character
+          
         );
         this.throwableObjects.push(bottle);
         this.character.amountOfBottle--;
@@ -76,8 +76,22 @@ class World {
     this.checkBottleEnemyCollisions();
   }
 
+  // checkCollisions() {
+  //   this.level.enemies.forEach(enemy => {
+  //     if (this.character.isColliding(enemy)) {
+  //       if (enemy.isDead() && !this.character.isAboveGround()) {
+  //         this.character.hit();
+  //         this.character.pauseMoving();
+  //         this.statusbarHealth.setPercentage(this.character.energy);
+  //       } else {
+  //         return;
+  //       }
+  //     }
+  //   })
+  // }
+
   checkCharacterEnemyCollisions() {
-    this.level.enemies.forEach((enemy, i) => {
+    this.level.enemies.forEach((enemy) => {
       if (this.characterJumpToKill(enemy)) {
         enemy.die();
         setTimeout(() => {

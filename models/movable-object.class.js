@@ -4,7 +4,6 @@ class MovableObject extends DrawableObject {
   speedY = 0;
   acceleration = 2;
   energy = 100;
- 
   lastHit = 0;
 
   offset = {
@@ -13,8 +12,6 @@ class MovableObject extends DrawableObject {
     left: 0,
     right: 0,
   };
-
-
 
   applyGravity() {
     setInterval(() => {
@@ -33,8 +30,6 @@ class MovableObject extends DrawableObject {
     }
   }
 
- 
-
   isColliding(mo) {
     return (
       this.x + this.width - this.offset.right > mo.x + mo.offset.left && // Rechte Kante der Flasche nach rechts
@@ -43,7 +38,6 @@ class MovableObject extends DrawableObject {
       this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom // Obere Kante der Flasche nach oben
     );
   }
-  
 
   collectCoin() {
     this.amountOfCoins += 10;
@@ -70,9 +64,8 @@ class MovableObject extends DrawableObject {
 
   isHurt() {
     let timepassed = new Date().getTime() - this.lastHit;
-    return timepassed < 500; 
-}
-
+    return timepassed < 500;
+  }
 
   isDead() {
     return this.energy == 0;
@@ -80,7 +73,7 @@ class MovableObject extends DrawableObject {
 
   lost() {
     return this.energy = 0;
-}
+  }
 
   /**
    *
@@ -95,7 +88,7 @@ class MovableObject extends DrawableObject {
 
   playOnce(images) {
     this.currentImage = 0;
-  
+
     const animationInterval = setInterval(() => {
       if (this.currentImage < images.length) {
         let path = images[this.currentImage];
@@ -104,27 +97,56 @@ class MovableObject extends DrawableObject {
       } else {
         clearInterval(animationInterval);
       }
-    }, 100);
+    }, 200);
   }
 
   moveRight() {
     this.x += this.speed;
-    this.lastActionTime = new Date().getTime(); 
+    this.lastActionTime = new Date().getTime();
+    
+
   }
 
   moveLeft() {
     this.x -= this.speed;
-    this.lastActionTime = new Date().getTime(); 
+    this.lastActionTime = new Date().getTime();
+
   }
 
-  jump() {
-    this.speedY = 30;
-    this.lastActionTime = new Date().getTime(); 
-  }
+
+  // jump() {
+  //   this.speedY = 30;
+  //   this.lastActionTime = new Date().getTime();
+  // }
 
   jumpOn(enemy) {
     enemy.die();
   }
+
+  // move() {
+  //   setInterval(() => {
+  //     if (this.x < 350) {
+  //       this.moveRight();
+  //       this.otherDirection = true;
+  //     }
+  //     if (!this.otherDirection) {
+  //       this.moveLeft();
+  //     } else {
+  //       this.moveRight();
+  //       this.otherDirection = true;
+  //     }
+  //     if (this.x > 1400) {
+  //       this.otherDirection = false;
+  //       this.moveLeft();
+  //     }
+
+  //   }, 1000 / 60)
+
+  // }
+
+
+
+
 }
 
 

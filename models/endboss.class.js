@@ -3,6 +3,7 @@ class Endboss extends MovableObject {
   width = 250;
   y = 80;
   energy = 100;
+  boss_sound = new Audio ("audio/boss.mp3");
 
   IMAGES_WALKING = [
     "img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -46,7 +47,7 @@ class Endboss extends MovableObject {
   ];
 
   offset = {
-    top: 20,
+    top: 60,
     bottom: 20,
     left: 30,
     right: 30
@@ -62,38 +63,27 @@ class Endboss extends MovableObject {
     this.x = 2700;
     this.id = "endboss";
     this.energy = 100;
+    this.speed = 0.2;
     this.animate();
+    // this.move()
   }
 
   takeDamage(amount) {
-    this.energy = Math.max(0, this.energy - amount); // Gesundheit reduzieren, aber nicht negativ
-    this.lastHit = new Date().getTime(); // Zeitpunkt des Treffers speichern
+    this.energy = Math.max(0, this.energy - amount);
+    this.lastHit = new Date().getTime();
     console.log(`Endboss nimmt Schaden: ${amount}. Gesundheit: ${this.energy}`);
   }
-
-
-  playHurt() {
-    console.log("Endboss erleidet Schaden!");
-    this.playAnimation(this.IMAGES_HURT); // Spielt die Hurt-Animation ab
-  }
-
-
-
-
 
 
   animate() {
     setInterval(() => {
       if (this.isDead()) {
-        this.die();
+        this.playdie();
       } else if (this.isHurt()) {
-        if (!this.isCurrentlyHurt) {
-          this.isCurrentlyHurt = true;
-          this.playOnce(this.IMAGES_HURT);
-          setTimeout(() => {
-            this.isCurrentlyHurt = false;
-          }, 500);
-        }
+        this.playHurt();
+
+
+
       } else {
         this.moveLeft();
       }
@@ -106,14 +96,30 @@ class Endboss extends MovableObject {
     }, 200);
   }
 
-  die() {
-    this.playOnce(this.IMAGES_DEAD); 
+  playHurt() {
+    this.boss_sound.play();
+    this.playOnce(this.IMAGES_HURT);
+  }
+
+  playdie() {
+    this.speed = 0;
+    
+    this.playOnce(this.IMAGES_DEAD);
+    
 
     setTimeout(() => {
-      this.y = -1000; 
-      this.isSplicable = true; 
-    },1000); 
+      
+      this.y = -1000;
+      this.isSplicable = true;
+    }, 500);
+
   }
+
+
+
+
+
+
 
 
 

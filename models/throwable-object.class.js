@@ -1,6 +1,7 @@
 class ThrowableObject extends MovableObject {
 
   collidedWith = {};
+  splash_sound = new Audio("audio/throw.mp3");
 
   IMAGES_BOTTLE_ROTATION = [
     "img_pollo_locco/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
@@ -41,19 +42,15 @@ class ThrowableObject extends MovableObject {
 
   throw() {
     this.speedY = 30;
-
     if (this.character) {
       this.character.lastActionTime = new Date().getTime();
       this.character.playAnimation(this.character.IMAGES_WALKING);
     }
-
     this.applyGravity();
     this.throwInterval = setInterval(() => {
       this.x += 10;
     }, 50);
   }
-
-
 
   animateRotation() {
     this.rotationInterval = setInterval(() => {
@@ -61,17 +58,19 @@ class ThrowableObject extends MovableObject {
     }, 100);
   }
 
-
   splash(enemy) {
-    if (this.collidedWith[enemy.id]) return; // Keine Mehrfachkollision
+    if (this.collidedWith[enemy.id]) return;
     this.collidedWith[enemy.id] = true;
-
+    console.log(this.collidedWith);
+    if (this.isSplashing) return;
+    this.isSplashing = true;
+    clearInterval(this.rotationInterval);
+    clearInterval(this.throwInterval);
     this.speedY = 0;
     this.speedX = 0;
     this.acceleration = 0;
-    clearInterval(this.throwInterval);
-
     this.playOnce(this.IMAGES_BOTTLE_SPLASH);
+    this.splash_sound.play();
 
     setTimeout(() => {
       this.isSplicable = true;

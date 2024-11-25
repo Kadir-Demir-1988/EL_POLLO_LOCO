@@ -30,8 +30,10 @@ class Chick extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.x = 700 + Math.random() * 500;
         this.speed = 0.8 * Math.random() * 0.5;
+        // this.move()
         this.animate();
         this.isDead = false;
+        
     }
 
     animate() {
@@ -47,7 +49,6 @@ class Chick extends MovableObject {
     takeDamage(amount) {
         this.health = Math.max(0, this.health - amount);
         if (this.health === 0) {
-            console.log(`${this.constructor.name} stirbt.`);
             this.die();
         }
     }

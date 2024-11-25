@@ -9,13 +9,12 @@ class Endbossbar extends DrawableObject {
         "img_pollo_locco/img/7_statusbars/2_statusbar_endboss/green/green100.png",
     ];
 
-    offset = {
-        top: 10,
-        bottom: 20,
-        left: 30,
-        right: 30
-    };
-
+    // offset = {
+    //     top: 10,
+    //     bottom: 20,
+    //     left: 30,
+    //     right: 30
+    // };
 
     percentage = 100;
 
@@ -29,9 +28,8 @@ class Endbossbar extends DrawableObject {
         this.setPercantage(100);
     }
 
-
     setPercantage(percentage) {
-        this.percentage = Math.max(0, percentage); // Stellt sicher, dass der Wert nicht negativ wird
+        this.percentage = Math.max(0, percentage);
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
