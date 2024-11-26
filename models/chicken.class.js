@@ -31,7 +31,7 @@ class Chicken extends MovableObject {
     this.loadImages(this.IMAGES_DEAD);
     this.x = 700 + Math.random() * 500;
     this.speed = 1;
-    // this.move()
+    this.move();
     this.animate();
 
     this.isDead = false;
@@ -41,11 +41,12 @@ class Chicken extends MovableObject {
 
   animate() {
     setInterval(() => {
-      this.moveLeft();
-    }, 1000 / 60);
+      if(!this.isDead){
 
-    setInterval(() => {
-      this.playAnimation(this.IMAGES_WALKING);
+        this.playAnimation(this.IMAGES_WALKING);
+      }else {
+        this.playAnimation(this.IMAGES_DEAD);
+      }
     }, 200);
   }
 

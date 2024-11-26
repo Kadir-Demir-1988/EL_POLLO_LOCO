@@ -6,7 +6,7 @@ class Character extends MovableObject {
   isJumping = false;
   amountOfCoins = 0;
   amountOfBottle = 0;
-  pepe_snore = new Audio("audio/snore.mp3");
+  // pepe_snore = new Audio("audio/snore.mp3");
 
 
 
@@ -106,19 +106,19 @@ class Character extends MovableObject {
         this.moveRight();
         this.otherDirection = false;
         this.walking_sound.play();
-        this.pepe_snore.pause();
+        // this.pepe_snore.pause();
       }
 
       if (this.world.keyboard.LEFT && this.x > 0) {
         this.moveLeft();
         this.otherDirection = true;
         this.walking_sound.play();
-        this.pepe_snore.pause();
+        // this.pepe_snore.pause();
       }
 
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
-        this.pepe_snore.pause();
+        // this.pepe_snore.pause();
       }
 
       this.world.camera_x = -this.x + 100;
@@ -156,7 +156,7 @@ class Character extends MovableObject {
   pepeIdleModus() {
     setInterval(() => {
       let timeSinceLastAction = new Date().getTime() - this.lastActionTime;
-      if (timeSinceLastAction > 4000) {
+      if (timeSinceLastAction > 7000) {
         this.playAnimation(this.IMAGES_IDLE);
       }
     }, 400);
@@ -165,9 +165,9 @@ class Character extends MovableObject {
   pepeLongIdle() {
     setInterval(() => {
       let timeSinceLastAction = new Date().getTime() - this.lastActionTime;
-      if (timeSinceLastAction > 7000) {
+      if (timeSinceLastAction > 10000) {
         this.playAnimation(this.IMAGES_SLEEP);
-        this.pepe_snore.play();
+        // this.pepe_snore.play();
       }
     }, 400);
   }

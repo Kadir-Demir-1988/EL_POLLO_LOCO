@@ -3,7 +3,7 @@ class Endboss extends MovableObject {
   width = 250;
   y = 80;
   energy = 100;
-  boss_sound = new Audio ("audio/boss.mp3");
+  boss_sound = new Audio("audio/boss.mp3");
 
   IMAGES_WALKING = [
     "img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -63,57 +63,75 @@ class Endboss extends MovableObject {
     this.x = 2700;
     this.id = "endboss";
     this.energy = 100;
-    this.speed = 0.2;
+    this.speed = 0.8;
+    this.walkLeft();
     this.animate();
-    // this.move()
-  }
+}
 
   takeDamage(amount) {
     this.energy = Math.max(0, this.energy - amount);
     this.lastHit = new Date().getTime();
     console.log(`Endboss nimmt Schaden: ${amount}. Gesundheit: ${this.energy}`);
   }
+  moveleftInt;
+  playAniInt;
+  animateInt;
+  walkLeft(){
+    this.moveleftInt = setInterval(() => {
+      this.moveLeft();
+    }, 200);
 
+    this.playAniInt = setInterval(() => {
+      if (!this.isDead()) {
+        this.playAnimation(this.IMAGES_WALKING);
+      }    
+    }, 300);
+  }
 
   animate() {
-    setInterval(() => {
+    this.animateInt = setInterval(() => {
       if (this.isDead()) {
+        clearInterval(this.animate);
+        clearInterval(this.moveLeft);
+        clearInterval(this.playAniInt);
         this.playdie();
       } else if (this.isHurt()) {
+        clearInterval(this.moveLeft);
+        clearInterval(this.playAniInt);
         this.playHurt();
-
-
-
-      } else {
+      } else{
         this.moveLeft();
-      }
-    }, 1000 / 60);
-
-    setInterval(() => {
-      if (!this.isHurt() && !this.isDead()) {
-        this.playAnimation(this.IMAGES_WALKING);
       }
     }, 200);
   }
 
+
+
   playHurt() {
     this.boss_sound.play();
     this.playOnce(this.IMAGES_HURT);
+    setTimeout(() => {
+      this.walkLeft();
+    }, 500);
   }
 
   playdie() {
     this.speed = 0;
-    
     this.playOnce(this.IMAGES_DEAD);
-    
 
     setTimeout(() => {
-      
       this.y = -1000;
       this.isSplicable = true;
-    }, 500);
+    }, 1500);
 
   }
+
+
+
+
+
+
+
 
 
 

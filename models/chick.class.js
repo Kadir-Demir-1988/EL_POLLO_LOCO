@@ -30,7 +30,7 @@ class Chick extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.x = 700 + Math.random() * 500;
         this.speed = 0.8 * Math.random() * 0.5;
-        // this.move()
+        this.move()
         this.animate();
         this.isDead = false;
         
@@ -38,13 +38,14 @@ class Chick extends MovableObject {
 
     animate() {
         setInterval(() => {
-            this.moveLeft();
-        }, 1000 / 60);
-
-        setInterval(() => {
+          if(!this.isDead){
+    
             this.playAnimation(this.IMAGES_WALKING);
+          }else {
+            this.playAnimation(this.IMAGES_DEAD);
+          }
         }, 200);
-    }
+      }
 
     takeDamage(amount) {
         this.health = Math.max(0, this.health - amount);

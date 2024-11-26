@@ -104,13 +104,11 @@ class MovableObject extends DrawableObject {
     this.x += this.speed;
     this.lastActionTime = new Date().getTime();
     
-
   }
 
   moveLeft() {
     this.x -= this.speed;
     this.lastActionTime = new Date().getTime();
-
   }
 
 
@@ -123,26 +121,26 @@ class MovableObject extends DrawableObject {
     enemy.die();
   }
 
-  // move() {
-  //   setInterval(() => {
-  //     if (this.x < 350) {
-  //       this.moveRight();
-  //       this.otherDirection = true;
-  //     }
-  //     if (!this.otherDirection) {
-  //       this.moveLeft();
-  //     } else {
-  //       this.moveRight();
-  //       this.otherDirection = true;
-  //     }
-  //     if (this.x > 1400) {
-  //       this.otherDirection = false;
-  //       this.moveLeft();
-  //     }
+  move() {
+    setInterval(() => {
+      if (this.x < 350) {
+        this.moveRight();
+        this.otherDirection = true;
+      }
+      if (!this.otherDirection) {
+        this.moveLeft();
+      } else {
+        this.moveRight();
+        this.otherDirection = true;
+      }
+      if (this.x > 1400) {
+        this.otherDirection = false;
+        this.moveLeft();
+      }
 
-  //   }, 1000 / 60)
+    }, 1000 / 60)
 
-  // }
+  }
 
 
 
