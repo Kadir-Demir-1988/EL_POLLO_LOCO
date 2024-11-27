@@ -1,10 +1,11 @@
 class MovableObject extends DrawableObject {
-  speed = 0.15;
+  speed;
   otherDirection = false;
   speedY = 0;
   acceleration = 2;
   energy = 100;
   lastHit = 0;
+  
 
   offset = {
     top: 0,
@@ -21,6 +22,8 @@ class MovableObject extends DrawableObject {
       }
     }, 1000 / 25);
   }
+
+  
 
   isAboveGround() {
     if (this instanceof ThrowableObject) {
@@ -86,8 +89,9 @@ class MovableObject extends DrawableObject {
     this.currentImage++;
   }
 
-  playOnce(images) {
+  playOnce(images, totalDuration) {
     this.currentImage = 0;
+    const timePerFrame = totalDuration / images.length; // Berechnung der Zeit pro Bild
 
     const animationInterval = setInterval(() => {
       if (this.currentImage < images.length) {
@@ -95,15 +99,17 @@ class MovableObject extends DrawableObject {
         this.img = this.imageCache[path];
         this.currentImage++;
       } else {
-        clearInterval(animationInterval);
+        clearInterval(animationInterval); // Stoppt die Animation nach der letzten Bildanzeige
       }
-    }, 200);
+    }, timePerFrame);
   }
+
+
 
   moveRight() {
     this.x += this.speed;
     this.lastActionTime = new Date().getTime();
-    
+
   }
 
   moveLeft() {

@@ -60,7 +60,7 @@ class World {
         let bottle = new ThrowableObject(
           this.character.x + 100,
           this.character.y + 100,
-          
+          this.character
         );
         this.throwableObjects.push(bottle);
         this.character.amountOfBottle--;
@@ -174,7 +174,7 @@ class World {
       this.flipImage(mo);
     }
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
+    // mo.drawFrame(this.ctx);
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }

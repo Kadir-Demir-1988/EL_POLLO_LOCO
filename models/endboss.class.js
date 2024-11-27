@@ -5,6 +5,10 @@ class Endboss extends MovableObject {
   energy = 100;
   boss_sound = new Audio("audio/boss.mp3");
 
+  moveleftInt;
+  playAniInt;
+  animateInt;
+
   IMAGES_WALKING = [
     "img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G1.png",
     "img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G2.png",
@@ -63,20 +67,19 @@ class Endboss extends MovableObject {
     this.x = 2700;
     this.id = "endboss";
     this.energy = 100;
-    this.speed = 0.8;
+    this.speed = 0.3;
     this.walkLeft();
     this.animate();
-}
+  }
 
   takeDamage(amount) {
     this.energy = Math.max(0, this.energy - amount);
     this.lastHit = new Date().getTime();
-    console.log(`Endboss nimmt Schaden: ${amount}. Gesundheit: ${this.energy}`);
   }
-  moveleftInt;
-  playAniInt;
-  animateInt;
-  walkLeft(){
+
+  walkLeft() {
+    if (this.moveleftInt) clearInterval(this.moveleftInt);
+    if (this.playAniInt) clearInterval(this.playAniInt);
     this.moveleftInt = setInterval(() => {
       this.moveLeft();
     }, 200);
@@ -84,60 +87,77 @@ class Endboss extends MovableObject {
     this.playAniInt = setInterval(() => {
       if (!this.isDead()) {
         this.playAnimation(this.IMAGES_WALKING);
-      }    
-    }, 300);
+      }
+    }, 200);
   }
 
   animate() {
     this.animateInt = setInterval(() => {
       if (this.isDead()) {
-        clearInterval(this.animate);
-        clearInterval(this.moveLeft);
-        clearInterval(this.playAniInt);
         this.playdie();
       } else if (this.isHurt()) {
-        clearInterval(this.moveLeft);
-        clearInterval(this.playAniInt);
         this.playHurt();
-      } else{
+      } else if (this.energy == 60) {
+        this.playAlert();
+      } else if (this.energy == 19) {
+        this.playAttack();
+      } else {
         this.moveLeft();
       }
     }, 200);
   }
 
-
-
   playHurt() {
+    if (this.hurtAnimationPlayed || this.energy == 60) return;
+    this.hurtAnimationPlayed = true;
+    clearInterval(this.moveleftInt);
+    clearInterval(this.playAniInt);
     this.boss_sound.play();
-    this.playOnce(this.IMAGES_HURT);
+    this.playOnce(this.IMAGES_HURT, 1200);
     setTimeout(() => {
+      this.hurtAnimationPlayed = false;
       this.walkLeft();
-    }, 500);
+    }, 1200);
   }
 
   playdie() {
     this.speed = 0;
-    this.playOnce(this.IMAGES_DEAD);
+    this.playOnce(this.IMAGES_DEAD, 1200);
 
     setTimeout(() => {
       this.y = -1000;
       this.isSplicable = true;
-    }, 1500);
+    }, 1400);
 
   }
 
+  playAlert() {
+    if (this.alertActive) return;
+    this.alertActive = true;
+    clearInterval(this.moveleftInt);
+    clearInterval(this.playAniInt);
+    this.energy -= 1;
+    this.playOnce(this.IMAGES_ALERT, 3200);
 
+    setTimeout(() => {
+      this.alertActive = false;
+      this.walkLeft();
+    }, 3300);
+  }
 
+  playAttack() {
+    if (this.alertattack) return;
+    this.alertattack = true;
+    clearInterval(this.moveleftInt);
+    clearInterval(this.playAniInt);
+    this.energy -= 1;
+    this.playOnce(this.IMAGES_ATTACK, 3200);
 
-
-
-
-
-
-
-
-
-
+    setTimeout(() => {
+      this.alertattack = false;
+      this.walkLeft();
+    }, 3300);
+  }
 
 
 

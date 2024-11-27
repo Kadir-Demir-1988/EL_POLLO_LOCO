@@ -3,6 +3,8 @@ class ThrowableObject extends MovableObject {
   collidedWith = {};
   splash_sound = new Audio("audio/throw.mp3");
 
+
+
   IMAGES_BOTTLE_ROTATION = [
     "img_pollo_locco/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
     "img_pollo_locco/img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png",
@@ -51,6 +53,8 @@ class ThrowableObject extends MovableObject {
       this.x += 10;
     }, 50);
   }
+
+
 
   animateRotation() {
     this.rotationInterval = setInterval(() => {

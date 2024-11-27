@@ -2,7 +2,7 @@ class Character extends MovableObject {
   y = 80;
   height = 250;
   width = 140;
-  speed = 10;
+  speed = 8;
   isJumping = false;
   amountOfCoins = 0;
   amountOfBottle = 0;
@@ -133,7 +133,7 @@ class Character extends MovableObject {
         if (!this.isJumping) {
           this.isJumping = true;
         }
-        this.playOnce(this.IMAGES_JUMPING);
+        this.playOnce(this.IMAGES_JUMPING, 1800);
       } else {
         this.isJumping = false;
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
