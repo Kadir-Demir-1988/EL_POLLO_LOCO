@@ -14,8 +14,10 @@ function init() {
 }
 
 function endGame(){
-  delete canvas;
-  delete world;
+  world.gameOver = true;
+  clearAllIntervals();
+  initLevel();
+  startGame();
 }
 
 function initBody() {

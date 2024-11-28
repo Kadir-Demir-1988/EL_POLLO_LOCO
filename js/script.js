@@ -17,12 +17,15 @@ function clearAllIntervals() {
 }
 
 function winScreen() {
+    endGame();
     toggleDisplay("canvas", false);
     toggleDisplay("win", true);
+    toggleDisplay("startscreen", false);
     bg_music.pause();
 }
 
 function startGame() {
+    initLevel();
     init();
     toggleDisplay("startscreen", false);
     toggleDisplay("canvas", true);
@@ -33,6 +36,7 @@ function startGame() {
 }
 
 function restartGame() {
+    toggleDisplay("win", false);
     toggleDisplay("gameover", false);
     toggleDisplay("canvas", true);
     endGame();
@@ -44,7 +48,8 @@ function goToStartMenu() {
     toggleDisplay("gameover", false);
     toggleDisplay("startscreen", true);
     toggleDisplay("canvas", false);
-    endGame();
+    toggleDisplay("win", false);
+    // endGame();
 }
 
 
