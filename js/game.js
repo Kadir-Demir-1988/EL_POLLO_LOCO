@@ -1,13 +1,30 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let = bg_music = new Audio ("audio/bgmusic.mp3");
+
 
 function init() {
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
-
-  console.log("My Character is", world.character);
+  bg_music.loop = true; 
+  bg_music.volume = 0.1;
+  bg_music.play();
+  
 }
+
+function endGame(){
+  delete canvas;
+  delete world;
+}
+
+function initBody() {
+  document.getElementById("canvas").style.display = "none";
+  bg_music.pause(); 
+  
+}
+
+
 
 document.addEventListener("keydown", (e) => {
   if (e.keyCode == 39) {

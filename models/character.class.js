@@ -7,6 +7,7 @@ class Character extends MovableObject {
   amountOfCoins = 0;
   amountOfBottle = 0;
   // pepe_snore = new Audio("audio/snore.mp3");
+  loosingsound = new Audio ("audio/losemusic.mp3");
 
 
 
@@ -96,6 +97,7 @@ class Character extends MovableObject {
     this.animate();
     this.pepeIdleModus();
     this.pepeLongIdle();
+    
 
   }
 
@@ -127,6 +129,7 @@ class Character extends MovableObject {
     setInterval(() => {
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
+        this.pepeIsDead();
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       } else if (this.isAboveGround()) {
@@ -183,6 +186,16 @@ class Character extends MovableObject {
     this.amountOfBottle += 10;
     if (this.amountOfBottle > 100) {
       this.amountOfBottle = 100;
+    }
+  }
+
+  pepeIsDead(){
+    if (this.energy == 0){
+      this.loosingsound.play();
+      setTimeout(() => {
+        gameOver();
+      }, 1500);
+     
     }
   }
 

@@ -16,19 +16,23 @@ class World {
   coins_sound = new Audio('audio/coins.mp3');
   bottle_sound = new Audio("audio/bottle.mp3");
   hurt_sound = new Audio("audio/hurt.mp3");
+  win_music = new Audio("audio/winmusic.mp3")
+
 
   constructor(canvas, keyboard) {
+    this.keyboard = keyboard;
+    if(canvas != null){
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
-    this.keyboard = keyboard;
-    this.draw();
-    this.setWorld();
-    this.run();
-
+      this.setWorld();
+      this.draw();
+      this.run();
+    }
   }
 
   setWorld() {
     this.character.world = this;
+
   }
 
   run() {
@@ -38,6 +42,7 @@ class World {
       this.collectingBottles();
       this.checkThrowObjects();
       this.checkEndbossHealth();
+      this.winScreen();
     }, 200);
   }
 
@@ -76,19 +81,6 @@ class World {
     this.checkBottleEnemyCollisions();
   }
 
-  // checkCollisions() {
-  //   this.level.enemies.forEach(enemy => {
-  //     if (this.character.isColliding(enemy)) {
-  //       if (enemy.isDead() && !this.character.isAboveGround()) {
-  //         this.character.hit();
-  //         this.character.pauseMoving();
-  //         this.statusbarHealth.setPercentage(this.character.energy);
-  //       } else {
-  //         return;
-  //       }
-  //     }
-  //   })
-  // }
 
   checkCharacterEnemyCollisions() {
     this.level.enemies.forEach((enemy) => {
@@ -154,7 +146,6 @@ class World {
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.level.enemies);
-
     this.addObjectsToMap(this.throwableObjects);
     this.ctx.translate(-this.camera_x, 0);
     let self = this;
@@ -213,5 +204,19 @@ class World {
       }
     });
   }
+
+  winScreen() {
+    const endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
+    if (endboss && endboss.energy === 0) {
+      this.win_music.play();
+
+      setTimeout(() => {
+        winScreen();
+      }, 1500);
+    }
+  }
+
+
+
 
 }

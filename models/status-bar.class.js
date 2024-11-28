@@ -18,6 +18,7 @@ class StatusBar extends DrawableObject {
     this.height = 50;
     this.width = 200;
     this.setPercantage(100);
+    
   }
 
   setPercantage(percentage) {
@@ -41,4 +42,6 @@ class StatusBar extends DrawableObject {
       return 0;
     }
   }
+
+  
 }

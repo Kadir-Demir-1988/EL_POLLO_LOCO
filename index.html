@@ -13,7 +13,7 @@
     <script src="./models/chicken.class.js"></script>
     <script src="./models/chick.class.js"></script>
     <script src="./models/cloud.class.js"></script>
-    
+
 
     <script src="./models/background-object.class.js"></script>
     <script src="./models/status-bar.class.js"></script>
@@ -30,14 +30,38 @@
     <script src="./models/endboss.class.js"></script>
     <script src="./Levels/level1.js"></script>
     <script src="./js/game.js"></script>
+    <script src="./js/script.js"></script>
     <title>El Pollo Loco</title>
 </head>
 
-<body onload="init()">
+<body onload="initBody()">
+    <div id="fullscreen">
+        <h1>El Pollo Loco</h1>
 
-    <h1>El Pollo loco</h1>
+        <div id="gameover" class="gameoverscreen" style="display: none;">
+            <h2>Game Over</h2>
+            <button onclick="restartGame()" class="tryagainbtn">Try Again</button>
+            <button onclick="goToStartMenu()" class="startmenübtn">Start Menü</button>
+        </div>
 
-    <canvas id="canvas" width="720" height="480"></canvas>
+        <div id="win" class="winningscreen" style="display: none;">
+            <img class="winkaktus" src="./img_pollo_locco/img/9_intro_outro_screens/winkaktus.png" alt="">
+
+            <h3>SUCCESS</h2>
+                <div>
+                    <button class="playagainbtn">Play Again</button>
+                    <button class="winstartmenübtn">Start Menü</button>
+                </div>
+        </div>
+
+        <div id="startscreen" class="start_screen" style="display: flex;">
+            <button onclick="startGame()" class="startgamebtn">Start Game</button>
+
+        </div>
+
+        <canvas id="canvas" class="gamescreen" width="720" height="480"></canvas>
+
+    </div>
 
 </body>
 

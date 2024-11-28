@@ -9,12 +9,7 @@ class Endbossbar extends DrawableObject {
         "img_pollo_locco/img/7_statusbars/2_statusbar_endboss/green/green100.png",
     ];
 
-    // offset = {
-    //     top: 10,
-    //     bottom: 20,
-    //     left: 30,
-    //     right: 30
-    // };
+    
 
     percentage = 100;
 
@@ -36,19 +31,21 @@ class Endbossbar extends DrawableObject {
 
     resolveImageIndex() {
         if (this.percentage == 100) {
-            return 5;
-        } else if (this.percentage == 80) {
-            return 4;
-        } else if (this.percentage == 60) {
-            return 3;
-        } else if (this.percentage == 40) {
-            return 2;
-        } else if (this.percentage == 20) {
-            return 1;
+            return 5; // 100%
+        } else if (this.percentage >= 61) {
+            return 4; // 61-80%
+        } else if (this.percentage >= 41) {
+            return 3; // 41-60%
+        } else if (this.percentage >= 21) {
+            return 2; // 21-40%
+        } else if (this.percentage >= 1) {
+            return 1; // 1-20%
         } else {
-            return 0;
+            return 0; // 0%
         }
     }
+    
+
 
 
 

@@ -4,6 +4,8 @@ class Endboss extends MovableObject {
   y = 80;
   energy = 100;
   boss_sound = new Audio("audio/boss.mp3");
+  boss_alarm = new Audio("audio/bossalarm.mp3")
+  
 
   moveleftInt;
   playAniInt;
@@ -64,10 +66,10 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_ATTACK);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEAD);
-    this.x = 2700;
+    this.x = 2600;
     this.id = "endboss";
     this.energy = 100;
-    this.speed = 0.3;
+    this.speed = 0.5;
     this.walkLeft();
     this.animate();
   }
@@ -75,6 +77,7 @@ class Endboss extends MovableObject {
   takeDamage(amount) {
     this.energy = Math.max(0, this.energy - amount);
     this.lastHit = new Date().getTime();
+    console.log(`Endboss nimmt Schaden: ${amount}. Verbleibende Energie: ${this.energy}`);
   }
 
   walkLeft() {
@@ -137,6 +140,7 @@ class Endboss extends MovableObject {
     clearInterval(this.moveleftInt);
     clearInterval(this.playAniInt);
     this.energy -= 1;
+    this.boss_alarm.play();
     this.playOnce(this.IMAGES_ALERT, 3200);
 
     setTimeout(() => {
@@ -158,6 +162,8 @@ class Endboss extends MovableObject {
       this.walkLeft();
     }, 3300);
   }
+
+
 
 
 
