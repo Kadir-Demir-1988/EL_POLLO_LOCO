@@ -1,19 +1,21 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let = bg_music = new Audio ("audio/bgmusic.mp3");
+let = bg_music = new Audio("audio/bgmusic.mp3");
+let soundMuted = false;
 
 
 function init() {
+  keyboard.mobileControl();
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
-  bg_music.loop = true; 
+  bg_music.loop = true;
   bg_music.volume = 0.1;
   bg_music.play();
-  
+
 }
 
-function endGame(){
+function endGame() {
   world.gameOver = true;
   clearAllIntervals();
   initLevel();
@@ -22,60 +24,27 @@ function endGame(){
 
 function initBody() {
   document.getElementById("canvas").style.display = "none";
-  bg_music.pause(); 
-  
+  bg_music.pause();
+
+}
+
+function mute() {
+  const bgMusic = bg_music; // Referenz auf die Musik
+  const soundIcon = document.getElementById("soundid"); // Icon-Element
+
+  if (!soundMuted) {
+    bgMusic.pause();
+    soundMuted = true;
+    soundIcon.src = "./img_pollo_locco/soundoff.png"; // Icon ändern
+  } else {
+    bgMusic.play();
+    soundMuted = false;
+    soundIcon.src = "./img_pollo_locco/soundon.png"; // Icon ändern
+  }
 }
 
 
 
-document.addEventListener("keydown", (e) => {
-  if (e.keyCode == 39) {
-    keyboard.RIGHT = true;
-  }
 
-  if (e.keyCode == 37) {
-    keyboard.LEFT = true;
-  }
 
-  if (e.keyCode == 38) {
-    keyboard.UP = true;
-  }
 
-  if (e.keyCode == 40) {
-    keyboard.DOWN = true;
-  }
-
-  if (e.keyCode == 32) {
-    keyboard.SPACE = true;
-  }
-
-  if (e.keyCode == 68) {
-    keyboard.D = true;
-  }
-});
-
-document.addEventListener("keyup", (e) => {
-  if (e.keyCode == 39) {
-    keyboard.RIGHT = false;
-  }
-
-  if (e.keyCode == 37) {
-    keyboard.LEFT = false;
-  }
-
-  if (e.keyCode == 38) {
-    keyboard.UP = false;
-  }
-
-  if (e.keyCode == 40) {
-    keyboard.DOWN = false;
-  }
-
-  if (e.keyCode == 32) {
-    keyboard.SPACE = false;
-  }
-
-  if (e.keyCode == 68) {
-    keyboard.D = false;
-  }
-});

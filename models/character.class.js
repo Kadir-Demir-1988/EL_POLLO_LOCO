@@ -1,4 +1,5 @@
 class Character extends MovableObject {
+  world;
   y = 80;
   height = 250;
   width = 140;
@@ -6,10 +7,9 @@ class Character extends MovableObject {
   isJumping = false;
   amountOfCoins = 0;
   amountOfBottle = 0;
-  // pepe_snore = new Audio("audio/snore.mp3");
+  pepe_snore = new Audio("audio/snore.mp3");
   loosingsound = new Audio ("audio/losemusic.mp3");
-
-
+  walking_sound = new Audio("audio/walking.mp3");
 
   IMAGES_WALKING = [
     "img_pollo_locco/img/2_character_pepe/2_walk/W-21.png",
@@ -74,16 +74,12 @@ class Character extends MovableObject {
     "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-20.png",
   ];
 
-  world;
-
   offset = {
     top: 80,
     bottom: 0,
     left: 0,
     right: 0,
   };
-
-  walking_sound = new Audio("audio/walking.mp3");
 
   constructor() {
     super().loadImage("img_pollo_locco/img/2_character_pepe/2_walk/W-21.png");
@@ -97,8 +93,6 @@ class Character extends MovableObject {
     this.animate();
     this.pepeIdleModus();
     this.pepeLongIdle();
-    
-
   }
 
   animate() {
@@ -108,19 +102,19 @@ class Character extends MovableObject {
         this.moveRight();
         this.otherDirection = false;
         this.walking_sound.play();
-        // this.pepe_snore.pause();
+        this.pepe_snore.pause();
       }
 
       if (this.world.keyboard.LEFT && this.x > 0) {
         this.moveLeft();
         this.otherDirection = true;
         this.walking_sound.play();
-        // this.pepe_snore.pause();
+        this.pepe_snore.pause();
       }
 
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
-        // this.pepe_snore.pause();
+        this.pepe_snore.pause();
       }
 
       this.world.camera_x = -this.x + 100;
@@ -147,7 +141,6 @@ class Character extends MovableObject {
   }
 
   jump() {
-
     this.speedY = 25;
     this.isJumping = true;
   }
@@ -170,7 +163,7 @@ class Character extends MovableObject {
       let timeSinceLastAction = new Date().getTime() - this.lastActionTime;
       if (timeSinceLastAction > 10000) {
         this.playAnimation(this.IMAGES_SLEEP);
-        // this.pepe_snore.play();
+        this.pepe_snore.play();
       }
     }, 400);
   }

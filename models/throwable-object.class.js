@@ -65,7 +65,6 @@ class ThrowableObject extends MovableObject {
   splash(enemy) {
     if (this.collidedWith[enemy.id]) return;
     this.collidedWith[enemy.id] = true;
-    console.log(this.collidedWith);
     if (this.isSplashing) return;
     this.isSplashing = true;
     clearInterval(this.rotationInterval);
