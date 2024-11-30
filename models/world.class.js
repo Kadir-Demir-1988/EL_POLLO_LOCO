@@ -43,6 +43,7 @@ class World {
       this.checkThrowObjects();
       this.checkEndbossHealth();
       this.winScreen();
+      
     }, 200);
   }
 
@@ -166,7 +167,7 @@ class World {
       this.flipImage(mo);
     }
     mo.draw(this.ctx);
-    // mo.drawFrame(this.ctx);
+    mo.drawFrame(this.ctx);
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }

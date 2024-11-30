@@ -16,10 +16,10 @@ class Chick extends MovableObject {
     ];
 
     offset = {
-        top: -20,
+        top: 0,
         bottom: 0,
-        left: -30,
-        right: -30,
+        left: 0,
+        right: 0,
     };
 
     constructor() {

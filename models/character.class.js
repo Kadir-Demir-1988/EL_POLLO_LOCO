@@ -77,8 +77,8 @@ class Character extends MovableObject {
   offset = {
     top: 80,
     bottom: 0,
-    left: 0,
-    right: 0,
+    left: 20,
+    right: 20,
   };
 
   constructor() {
@@ -152,7 +152,7 @@ class Character extends MovableObject {
   pepeIdleModus() {
     setInterval(() => {
       let timeSinceLastAction = new Date().getTime() - this.lastActionTime;
-      if (timeSinceLastAction > 7000) {
+      if (timeSinceLastAction > 3000) {
         this.playAnimation(this.IMAGES_IDLE);
       }
     }, 400);
@@ -161,7 +161,7 @@ class Character extends MovableObject {
   pepeLongIdle() {
     setInterval(() => {
       let timeSinceLastAction = new Date().getTime() - this.lastActionTime;
-      if (timeSinceLastAction > 10000) {
+      if (timeSinceLastAction > 6000) {
         this.playAnimation(this.IMAGES_SLEEP);
         this.pepe_snore.play();
       }

@@ -66,6 +66,7 @@ function checkOrientation() {
 function showInstructions() {
     toggleDisplay("startscreen", false);
     toggleDisplay("instructionid", true);
+    toggleDisplay("impressum", false);
 }
 
 function hideInstructions() {
@@ -75,6 +76,7 @@ function hideInstructions() {
 
 function showpolicy() {
     toggleDisplay("startscreen", false);
+    toggleDisplay("instructionid", false);
     document.getElementById("impressum").style.display = "block";
 }
 

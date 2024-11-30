@@ -11,13 +11,13 @@ class Coin extends MovableObject {
     ];
 
     offset = {
-        top: 20,
-        bottom: 20,
-        left: 20,
-        right: 20,
+        top: 40,
+        bottom: 40,
+        left: 40,
+        right: 40,
     };
 
-    // coin_sound = new Audio('audio/coins.mp3');
+    
 
     constructor(x, y) {
         super().loadImage("img_pollo_locco/img/8_coin/coin_2.png");
