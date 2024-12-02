@@ -1,6 +1,18 @@
 let level1;
 initLevel();
 
+/**
+ * Initializes level 1 by creating a new instance of the Level class and passing all the necessary parameters to it.
+ *
+ * The enemies array contains 5 instances of the Chicken, Chick and Endboss classes.
+ * The clouds array contains 1 instance of the Cloud class.
+ * The backgroundObjects array contains 40 instances of the BackgroundObject class.
+ * The coins array contains 10 instances of the Coin class.
+ * The bottles array contains 12 instances of the Bottle class.
+ *
+ * @function initLevel
+ * @author Tom Gijsbrecht
+ */
 function initLevel(){
 
 level1 = new Level(

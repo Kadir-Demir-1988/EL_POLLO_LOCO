@@ -5,7 +5,6 @@ class Chicken extends MovableObject {
   health = 20;
   chicken_sound = new Audio("audio/chicken.mp3");
 
-
   IMAGES_WALKING = [
     "img_pollo_locco/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
     "img_pollo_locco/img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
@@ -23,26 +22,32 @@ class Chicken extends MovableObject {
     right: 10,
   };
 
+  /**
+   * Constructor for Chicken
+   * 
+   * @description Initializes chicken object with starting position, speed, and animations
+   * @param {none}
+   */
   constructor() {
-    super().loadImage(
-      "img_pollo_locco/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png"
-    );
+    super().loadImage("img_pollo_locco/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEAD);
     this.x = 700 + Math.random() * 500;
     this.speed = 1;
     this.move();
     this.animate();
-
     this.isDead = false;
-
-
   }
 
+  /**
+   * Animates the chicken by playing the walk animation if alive, dead animation if dead
+   * 
+   * @description Animates the chicken by playing the walk animation if alive, dead animation if dead
+   * @param {none}
+   */
   animate() {
     setInterval(() => {
       if(!this.isDead){
-
         this.playAnimation(this.IMAGES_WALKING);
       }else {
         this.playAnimation(this.IMAGES_DEAD);
@@ -50,6 +55,11 @@ class Chicken extends MovableObject {
     }, 200);
   }
 
+  /**
+   * Reduces health by given amount, if health falls to 0, calls die()
+   * @description Reduces health by given amount, if health falls to 0, calls die()
+   * @param {number} amount - amount of health to reduce
+   */
   takeDamage(amount) {
     this.health = Math.max(0, this.health - amount);
     if (this.health === 0) {
@@ -57,6 +67,11 @@ class Chicken extends MovableObject {
     }
   }
 
+  /**
+   * Sets isDead to true, stops movement, plays die sound, changes image to dead image, and moves off screen
+   * @description Sets isDead to true, stops movement, plays die sound, changes image to dead image, and moves off screen
+   * @param {none}
+   */
   die() {
     if (this.isDead) return;
     this.isDead = true;
@@ -68,10 +83,4 @@ class Chicken extends MovableObject {
       this.y = -1000;
     }, 1000);
   }
-
-
-
-
-
-
 }

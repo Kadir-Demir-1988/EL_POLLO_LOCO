@@ -10,6 +10,15 @@ class StatusBar extends DrawableObject {
 
   percentage = 100;
 
+  /**
+   * Creates a new StatusBar object.
+   * 
+   * @description Initializes the StatusBar with health bar images, sets
+   * the x and y position to the top left of the screen, and sets the
+   * percentage to 100, which represents the maximum health.
+   * 
+   * @param {none}
+   */ 
   constructor() {
     super();
     this.loadImages(this.IMAGES);
@@ -18,15 +27,37 @@ class StatusBar extends DrawableObject {
     this.height = 50;
     this.width = 200;
     this.setPercantage(100);
-    
   }
 
+/**
+ * Sets the percentage value and updates the corresponding image.
+ * 
+ * @param {number} percentage - The new percentage value to set.
+ * 
+ * This method updates the `percentage` property with the given value and 
+ * changes the displayed image based on the resolved image index from the 
+ * `IMAGES` array and the `imageCache`.
+ */
   setPercantage(percentage) {
-    this.percentage = percentage; // => 0 ... 5
+    this.percentage = percentage;
     let path = this.IMAGES[this.resolveImageIndex()];
     this.img = this.imageCache[path];
   }
 
+/**
+ * Resolves and returns the index of the image corresponding to the current
+ * percentage value.
+ * 
+ * The index is determined based on predefined percentage thresholds:
+ * - 100% returns index 5
+ * - >80% returns index 4
+ * - >60% returns index 3
+ * - >40% returns index 2
+ * - >20% returns index 1
+ * - ≤20% returns index 0
+ *
+ * @returns {number} The index of the image to display based on the percentage.
+ */
   resolveImageIndex() {
     if (this.percentage == 100) {
       return 5;
@@ -42,6 +73,4 @@ class StatusBar extends DrawableObject {
       return 0;
     }
   }
-
-  
 }

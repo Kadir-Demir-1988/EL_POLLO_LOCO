@@ -1,9 +1,6 @@
 class ThrowableObject extends MovableObject {
-
   collidedWith = {};
   splash_sound = new Audio("audio/throw.mp3");
-
-
 
   IMAGES_BOTTLE_ROTATION = [
     "img_pollo_locco/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
@@ -28,7 +25,21 @@ class ThrowableObject extends MovableObject {
     right: 5
   };
 
-
+  /**
+   * Constructor for a ThrowableObject.
+   * 
+   * @param {number} x - The x-coordinate of the object.
+   * @param {number} y - The y-coordinate of the object.
+   * @param {Character} character - The character that threw the object.
+   * 
+   * The constructor sets the image of the object to the first image in
+   * the IMAGES_BOTTLE_ROTATION array, and sets the image cache to contain
+   * all the images in the IMAGES_BOTTLE_ROTATION and IMAGES_BOTTLE_SPLASH
+   * arrays. It also sets the x and y coordinates of the object, and the
+   * height and width to 60 and 50 respectively. The character that threw
+   * the object is stored in the character property. The throw() and
+   * animateRotation() methods are then called.
+   */
   constructor(x, y, character) {
     super().loadImage("img_pollo_locco/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png");
     this.loadImages(this.IMAGES_BOTTLE_ROTATION);
@@ -42,6 +53,14 @@ class ThrowableObject extends MovableObject {
     this.animateRotation();
   }
 
+  /**
+   * Throws the object.
+   * 
+   * Sets the vertical speed of the object to 30, and if the object was thrown
+   * by a character, sets the character's last action time to the current time
+   * and plays the character's walk animation. It then applies gravity to the
+   * object and starts moving the object to the right every 50 milliseconds.
+   */
   throw() {
     this.speedY = 30;
     if (this.character) {
@@ -54,14 +73,29 @@ class ThrowableObject extends MovableObject {
     }, 50);
   }
 
-
-
+/**
+ * Animates the rotation of the throwable object.
+ * 
+ * This method cycles through the rotation images of the bottle
+ * at a 100ms interval to create a continuous rotation animation.
+ */
   animateRotation() {
     this.rotationInterval = setInterval(() => {
       this.playAnimation(this.IMAGES_BOTTLE_ROTATION);
     }, 100);
   }
 
+  /**
+   * Handles the splash of the bottle when it hits an enemy.
+   * 
+   * This method checks if the bottle has already collided with the enemy and
+   * if it is already splashing. If not, it sets the bottle's vertical and
+   * horizontal speeds to 0, clears the rotation and throw intervals, and
+   * plays the bottle splash animation and sound. It also sets the bottle's
+   * isSplicable flag to true after the splash animation has finished.
+   * 
+   * @param {Enemy} enemy - The enemy that the bottle has collided with.
+   */
   splash(enemy) {
     if (this.collidedWith[enemy.id]) return;
     this.collidedWith[enemy.id] = true;
@@ -72,36 +106,10 @@ class ThrowableObject extends MovableObject {
     this.speedY = 0;
     this.speedX = 0;
     this.acceleration = 0;
-    this.playOnce(this.IMAGES_BOTTLE_SPLASH);
+    this.playOnce(this.IMAGES_BOTTLE_SPLASH, 1800);
     this.splash_sound.play();
-
     setTimeout(() => {
       this.isSplicable = true;
     }, this.IMAGES_BOTTLE_SPLASH.length * 100);
   }
-
-  drawFrame(ctx) {
-    // Blauer Rahmen für die Flasche selbst
-    ctx.beginPath();
-    ctx.lineWidth = "2";
-    ctx.strokeStyle = "blue";
-    ctx.rect(this.x, this.y, this.width, this.height);
-    ctx.stroke();
-
-    // Roter Rahmen für den Offset-Bereich
-    if (this.offset) {
-      ctx.beginPath();
-      ctx.lineWidth = "2";
-      ctx.strokeStyle = "red";
-      ctx.rect(
-        this.x + (this.offset.left || 0),
-        this.y + (this.offset.top || 0),
-        this.width - (this.offset.left || 0) - (this.offset.right || 0),
-        this.height - (this.offset.top || 0) - (this.offset.bottom || 0)
-      );
-      ctx.stroke();
-    }
-  }
-
-
 }

@@ -8,48 +8,28 @@ class DrawableObject {
   height = 150;
   width = 100;
 
-  // loadImage("img/test.png")
+  /**
+   * Loads an image from the given path into the `img` property.
+   * @param {string} path - URL of the image to load.
+   */
   loadImage(path) {
-    this.img = new Image(); // this.img = document.getElementbyId("image") <img id="image" src>
+    this.img = new Image(); 
     this.img.src = path;
   }
 
+  /**
+   * Draws the object onto the given canvas context.
+   * @param {CanvasRenderingContext2D} ctx - The context to draw onto.
+   */
   draw(ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
-
-  drawFrame(ctx) {
-    if (
-      this instanceof Character ||
-      this instanceof Chicken ||
-      this instanceof Chick ||
-      this instanceof Endboss ||
-      this instanceof Bottle ||
-      this instanceof Coin
-    ) {
-      // Zeichnet den normalen Rahmen um das Objekt
-      // ctx.beginPath();
-      // ctx.lineWidth = "1";
-      // ctx.strokeStyle = "blue";
-      // ctx.rect(this.x, this.y, this.width, this.height);
-      // ctx.stroke();
-
-      // Zeichnet den Offset-Rahmen, wenn Offset definiert ist
-      if (this.offset) {
-        ctx.beginPath();
-        ctx.lineWidth = "1";
-        ctx.strokeStyle = "red"; // Farbe für den Offset-Bereich
-        ctx.rect(
-          this.x + (this.offset.left || 0),
-          this.y + (this.offset.top || 0),
-          this.width - (this.offset.left || 0) - (this.offset.right || 0),
-          this.height - (this.offset.top || 0) - (this.offset.bottom || 0)
-        );
-        ctx.stroke();
-      }
-    }
-  }
-
+  
+  /**
+   * Loads an array of image paths into the `imageCache` property. Each image is
+   * stored under the path as the key.
+   * @param {string[]} arr - Array of image paths to load.
+   */
 
   loadImages(arr) {
     arr.forEach((path) => {

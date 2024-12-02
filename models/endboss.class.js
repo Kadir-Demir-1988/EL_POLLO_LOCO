@@ -5,8 +5,6 @@ class Endboss extends MovableObject {
   energy = 100;
   boss_sound = new Audio("audio/boss.mp3");
   boss_alarm = new Audio("audio/bossalarm.mp3")
-  
-
   moveleftInt;
   playAniInt;
   animateInt;
@@ -59,6 +57,11 @@ class Endboss extends MovableObject {
     right: 30
   };
 
+  /**
+   * Constructor for the Endboss class
+   * @description Initializes the Endboss by loading its images, setting its initial position, and setting its initial state to walking left.
+   * @param {none}
+   */
   constructor() {
     super().loadImage(this.IMAGES_WALKING[0]);
     this.loadImages(this.IMAGES_WALKING);
@@ -74,12 +77,28 @@ class Endboss extends MovableObject {
     this.animate();
   }
 
+/**
+ * Reduces the energy of the Endboss by the specified amount and logs the damage taken.
+ * 
+ * This method decreases the Endboss's energy by the given amount, ensuring it doesn't go below zero.
+ * It also updates the timestamp of the last hit received.
+ * 
+ * @param {number} amount - The amount of damage to inflict on the Endboss.
+ */
   takeDamage(amount) {
     this.energy = Math.max(0, this.energy - amount);
     this.lastHit = new Date().getTime();
     console.log(`Endboss nimmt Schaden: ${amount}. Verbleibende Energie: ${this.energy}`);
   }
 
+  /**
+   * Sets the Endboss to walk to the left.
+   * 
+   * This method stops any previous movement and animation, and then sets the Endboss to move to the left every 200 milliseconds.
+   * It also animates the Endboss's walking animation every 200 milliseconds, unless the Endboss is dead.
+   * 
+   * @param {none}
+   */
   walkLeft() {
     if (this.moveleftInt) clearInterval(this.moveleftInt);
     if (this.playAniInt) clearInterval(this.playAniInt);
@@ -94,6 +113,13 @@ class Endboss extends MovableObject {
     }, 200);
   }
 
+  /**
+   * Animates the Endboss by playing a specific animation based on its state.
+   * 
+   * This method plays a specific animation based on the Endboss's state. If it's dead, it plays the die animation. If it's hurt, it plays the hurt animation. If its energy is 60, it plays the alert animation. If its energy is 19, it plays the attack animation. Otherwise, it plays the walking animation.
+   * 
+   * @param {none}
+   */
   animate() {
     this.animateInt = setInterval(() => {
       if (this.isDead()) {
@@ -110,6 +136,14 @@ class Endboss extends MovableObject {
     }, 200);
   }
 
+  /**
+   * Animates the Endboss by playing the hurt animation when it is hurt.
+   * 
+   * This method plays the hurt animation when the Endboss is hurt, unless the hurt animation is already being played or the Endboss's energy is 60.
+   * It also stops any previous movement and animation, plays the boss hurt sound, and then waits for 1.2 seconds before resuming the walking animation.
+   * 
+   * @param {none}
+   */
   playHurt() {
     if (this.hurtAnimationPlayed || this.energy == 60) return;
     this.hurtAnimationPlayed = true;
@@ -123,6 +157,16 @@ class Endboss extends MovableObject {
     }, 1200);
   }
 
+/**
+ * Handles the endboss's death animation and state transition.
+ * 
+ * This method stops the endboss's movement by setting its speed to 0 and plays
+ * the death animation. After the animation, it sets the y position to -1000 to
+ * effectively remove the endboss from the visible screen and marks it as splicable
+ * to indicate it's ready for removal or further processing.
+ * 
+ * @param {none}
+ */
   playdie() {
     this.speed = 0;
     this.playOnce(this.IMAGES_DEAD, 1200);
@@ -134,6 +178,18 @@ class Endboss extends MovableObject {
 
   }
 
+  /**
+   * Plays the alert animation if the Endboss's energy is 60, indicating
+   * that it's about to attack.
+   * 
+   * This method first checks if the alert animation is already being played.
+   * If not, it stops any previous movement and animation, decrements the
+   * Endboss's energy by 1, plays the boss alarm sound, and plays the alert
+   * animation. After the animation, it waits for 3.3 seconds before resuming
+   * the walking animation.
+   * 
+   * @param {none}
+   */
   playAlert() {
     if (this.alertActive) return;
     this.alertActive = true;
@@ -142,12 +198,23 @@ class Endboss extends MovableObject {
     this.energy -= 1;
     this.boss_alarm.play();
     this.playOnce(this.IMAGES_ALERT, 3200);
-
     setTimeout(() => {
       this.alertActive = false;
       this.walkLeft();
     }, 3300);
   }
+
+  /**
+   * Plays the attack animation if the Endboss's energy is 20, indicating
+   * that it's about to attack.
+   * 
+   * This method first checks if the attack animation is already being played.
+   * If not, it stops any previous movement and animation, decrements the
+   * Endboss's energy by 1, plays the attack animation. After the animation,
+   * it waits for 3.3 seconds before resuming the walking animation.
+   * 
+   * @param {none}
+   */
 
   playAttack() {
     if (this.alertattack) return;
@@ -156,18 +223,9 @@ class Endboss extends MovableObject {
     clearInterval(this.playAniInt);
     this.energy -= 1;
     this.playOnce(this.IMAGES_ATTACK, 3200);
-
     setTimeout(() => {
       this.alertattack = false;
       this.walkLeft();
     }, 3300);
   }
-
-
-
-
-
-
-
-
 }

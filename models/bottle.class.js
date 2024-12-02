@@ -13,6 +13,11 @@ class Bottle extends DrawableObject {
     right: 25,
   };
 
+  /**
+   * Constructor for a Bottle object
+   * @param {number} x - the x position of the bottle
+   * @param {number} y - the y position of the bottle
+   */
   constructor(x, y) {
     super();
     this.loadImage(this.IMAGES);

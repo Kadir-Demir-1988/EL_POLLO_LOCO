@@ -1,7 +1,4 @@
 class Coin extends MovableObject {
-
-
-
     height = 100;
     width = 100;
 
@@ -17,8 +14,11 @@ class Coin extends MovableObject {
         right: 40,
     };
 
-    
-
+    /**
+     * @description Creates a new Coin object
+     * @param {number} x - initial x position
+     * @param {number} y - initial y position
+     */
     constructor(x, y) {
         super().loadImage("img_pollo_locco/img/8_coin/coin_2.png");
         this.loadImages(this.IMAGES);
@@ -27,17 +27,14 @@ class Coin extends MovableObject {
         this.animate();
     }
 
-    
-
-
+    /**
+     * @description Animates the coin object by switching between its two images every 400 ms.
+     * The animation is done by calling the playAnimation method from the MovableObject class
+     * with the array of images (IMAGES) as the argument.
+     */
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES);
         }, 400);
     }
-
-    
-
-
-
 } 

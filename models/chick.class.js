@@ -22,10 +22,12 @@ class Chick extends MovableObject {
         right: 0,
     };
 
+    /**
+     * @description Creates a Chick object and sets it to move and animate, sets random x position and speed
+     * @param {none}
+     */
     constructor() {
-        super().loadImage(
-            "img_pollo_locco/img/3_enemies_chicken/chicken_small/1_walk/1_w.png"
-        );
+        super().loadImage("img_pollo_locco/img/3_enemies_chicken/chicken_small/1_walk/1_w.png");
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
         this.x = 700 + Math.random() * 500;
@@ -33,13 +35,15 @@ class Chick extends MovableObject {
         this.move()
         this.animate();
         this.isDead = false;
-        
     }
 
+    /**
+     * @description Animates the Chick by playing the walk animation if alive, dead animation if dead
+     * @param {none}
+     */
     animate() {
         setInterval(() => {
           if(!this.isDead){
-    
             this.playAnimation(this.IMAGES_WALKING);
           }else {
             this.playAnimation(this.IMAGES_DEAD);
@@ -47,6 +51,10 @@ class Chick extends MovableObject {
         }, 200);
       }
 
+    /**
+     * @description Reduces health by given amount, if health falls to 0, calls die()
+     * @param {number} amount - amount of health to reduce
+     */
     takeDamage(amount) {
         this.health = Math.max(0, this.health - amount);
         if (this.health === 0) {
@@ -54,6 +62,10 @@ class Chick extends MovableObject {
         }
     }
 
+    /**
+     * @description Sets isDead to true, stops movement, plays die sound, changes image to dead image, and moves off screen
+     * @param {none}
+     */
     die() {
         if (this.isDead) return;
         this.isDead = true;
