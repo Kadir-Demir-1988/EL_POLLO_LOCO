@@ -40,7 +40,6 @@ function endGame() {
   world.gameOver = true;
   bg_music.pause();
   clearAllIntervals();
-  initLevel();
   startGame();
 }
 

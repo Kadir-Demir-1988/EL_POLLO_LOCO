@@ -5,10 +5,14 @@ body {
     font-family: "AbrilFatface-Regular";
     background-image: url(./img_pollo_locco/img/9_intro_outro_screens/bgimg.jpg);
     background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    max-height: 100vh;
-
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    overflow: hidden;
 }
+
 
 @font-face {
     font-family: "AbrilFatface-Regular";
@@ -206,6 +210,12 @@ footer {
 }
 
 .footericon {
+    height: 32px;
+    cursor: pointer;
+}
+
+.footericon2 {
+    display: flex;
     height: 32px;
     cursor: pointer;
 }

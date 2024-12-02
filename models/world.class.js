@@ -112,7 +112,7 @@ class World {
         );
         this.throwableObjects.push(bottle);
         this.character.amountOfBottle--;
-        this.bottleBar.setPercantage((this.character.amountOfBottle / 10) * 100);
+        this.bottleBar.setPercantage((this.character.amountOfBottle / 5) * 100);
       } else {
         this.bottleBar.shake();
       }
@@ -157,6 +157,19 @@ class World {
   }
 
   /**
+   * Determines if the character can jump on and kill an enemy.
+   * 
+   * This method checks if the character is colliding with an enemy and is above the ground.
+   * If both conditions are true, it indicates that the character can jump on the enemy to kill it.
+   * 
+   * @param {Enemy} enemy - The enemy object to check collision with.
+   * @returns {boolean} - True if the character can jump on and kill the enemy, false otherwise.
+   */
+  characterJumpToKill(enemy) {
+    return this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0;
+  }
+
+  /**
    * Checks for collisions between bottles and enemies.
    * 
    * This method loops through all bottles and enemies in the level and checks if a bottle
@@ -172,26 +185,18 @@ class World {
             bottle.splash(enemy);
             enemy.takeDamage(20);
             if (enemy instanceof Endboss) {
-              this.endbossBar.setPercantage(enemy.energy);}}}});
-            if (bottle.isSplicable) {
-            this.throwableObjects.splice(i, 1);
+              this.endbossBar.setPercantage(enemy.energy);
+            }
+          }
+        }
+      });
+      if (bottle.isSplicable) {
+        this.throwableObjects.splice(i, 1);
       }
     });
   }
 
-/**
- * Determines if the character can jump on and kill an enemy.
- * 
- * This method checks if the character is colliding with an enemy and is above the ground.
- * If both conditions are true, it indicates that the character can jump on the enemy to kill it.
- * 
- * @param {Enemy} enemy - The enemy object to check collision with.
- * @returns {boolean} - True if the character can jump on and kill the enemy, false otherwise.
- */
-  characterJumpToKill(enemy) {
-    return this.character.isColliding(enemy) && this.character.isAboveGround();
-  }
-
+  
   /**
    * Checks if the character is colliding with an enemy.
    * 
@@ -286,15 +291,15 @@ class World {
     }
   }
 
-/**
- * Flips the given object's image horizontally on the canvas.
- * 
- * This method saves the current canvas context state, translates the context by the object's width,
- * and scales the context horizontally by -1 to flip the image. The object's x-coordinate is also
- * negated to adjust its position after flipping.
- * 
- * @param {MovableObject} mo - The object whose image is to be flipped.
- */
+  /**
+   * Flips the given object's image horizontally on the canvas.
+   * 
+   * This method saves the current canvas context state, translates the context by the object's width,
+   * and scales the context horizontally by -1 to flip the image. The object's x-coordinate is also
+   * negated to adjust its position after flipping.
+   * 
+   * @param {MovableObject} mo - The object whose image is to be flipped.
+   */
   flipImage(mo) {
     this.ctx.save();
     this.ctx.translate(mo.width, 0);
@@ -337,11 +342,12 @@ class World {
    */
   collectingBottles() {
     this.level.bottles.forEach((bottle, i) => {
-      if (this.character.isColliding(bottle)) {
+      if (this.character.amountOfBottle < 5 && this.character.isColliding(bottle)) {
         this.character.amountOfBottle++;
         this.bottle_sound.play();
         this.level.bottles.splice(i, 1);
-        this.bottleBar.setPercantage((this.character.amountOfBottle / 10) * 100);
+        let percentage = this.character.amountOfBottle * 20; 
+        this.bottleBar.setPercantage(percentage); 
       }
     });
   }

@@ -18,7 +18,7 @@ class StatusBar extends DrawableObject {
    * percentage to 100, which represents the maximum health.
    * 
    * @param {none}
-   */ 
+   */
   constructor() {
     super();
     this.loadImages(this.IMAGES);
@@ -29,48 +29,49 @@ class StatusBar extends DrawableObject {
     this.setPercantage(100);
   }
 
-/**
- * Sets the percentage value and updates the corresponding image.
- * 
- * @param {number} percentage - The new percentage value to set.
- * 
- * This method updates the `percentage` property with the given value and 
- * changes the displayed image based on the resolved image index from the 
- * `IMAGES` array and the `imageCache`.
- */
+  /**
+   * Sets the percentage value and updates the corresponding image.
+   * 
+   * @param {number} percentage - The new percentage value to set.
+   * 
+   * This method updates the `percentage` property with the given value and 
+   * changes the displayed image based on the resolved image index from the 
+   * `IMAGES` array and the `imageCache`.
+   */
   setPercantage(percentage) {
     this.percentage = percentage;
     let path = this.IMAGES[this.resolveImageIndex()];
     this.img = this.imageCache[path];
   }
 
-/**
- * Resolves and returns the index of the image corresponding to the current
- * percentage value.
- * 
- * The index is determined based on predefined percentage thresholds:
- * - 100% returns index 5
- * - >80% returns index 4
- * - >60% returns index 3
- * - >40% returns index 2
- * - >20% returns index 1
- * - ≤20% returns index 0
- *
- * @returns {number} The index of the image to display based on the percentage.
- */
+  /**
+   * Resolves and returns the index of the image corresponding to the current
+   * percentage value.
+   * 
+   * The index is determined based on predefined percentage thresholds:
+   * - 100% returns index 5
+   * - >80% returns index 4
+   * - >60% returns index 3
+   * - >40% returns index 2
+   * - >20% returns index 1
+   * - ≤20% returns index 0
+   *
+   * @returns {number} The index of the image to display based on the percentage.
+   */
   resolveImageIndex() {
-    if (this.percentage == 100) {
+    if (this.percentage > 80) {
       return 5;
-    } else if (this.percentage > 80) {
-      return 4;
     } else if (this.percentage > 60) {
-      return 3;
+      return 4;
     } else if (this.percentage > 40) {
-      return 2;
+      return 3;
     } else if (this.percentage > 20) {
+      return 2;
+    } else if (this.percentage > 0) {
       return 1;
     } else {
       return 0;
     }
   }
+
 }

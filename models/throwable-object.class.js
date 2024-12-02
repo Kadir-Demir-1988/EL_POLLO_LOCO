@@ -66,6 +66,7 @@ class ThrowableObject extends MovableObject {
     if (this.character) {
       this.character.lastActionTime = new Date().getTime();
       this.character.playAnimation(this.character.IMAGES_WALKING);
+      
     }
     this.applyGravity();
     this.throwInterval = setInterval(() => {

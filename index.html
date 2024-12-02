@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="./img_pollo_locco/img/">
+    <link rel="icon" type="image/x-icon" href="./img_pollo_locco/img/favicon.png">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./mobile.css">
+    
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/movable-object.class.js"></script>
 
@@ -42,7 +43,7 @@
     <div id="fullscreen">
 
 
-        <div id="mobilecontrol_left" class="mobilecontrol" style="display: none;">
+        <div id="mobilecontrol_left" class="mobilecontrol">
             <img id="jumpbtn" class="mobileicon" src="./img_pollo_locco/space.png">
             <img id="leftbtn" class="mobileicon" src="./img_pollo_locco/leftarrow.png">
         </div>
@@ -126,7 +127,7 @@
                 target="_blank">Pixabay</a><br>
         </div>
 
-        <div id="mobilecontrol_right" class="mobilecontrol" style="display: none;">
+        <div id="mobilecontrol_right" class="mobilecontrol">
             <img id="throwbtn" class="mobileicon" src="./img_pollo_locco/d.png">
             <img id="rightbtn" class="mobileicon" src="./img_pollo_locco/rightarrow.png">
         </div>
@@ -134,18 +135,13 @@
         <div id="orientation-warning" class="orientation-warning">
             <p>Please rotate your device!</p>
         </div>
-
-        
-
-        
     </div>
 
     </div>
-    <footer>
-        <img onclick="mute()" id="soundid" class="footericon" src="./img_pollo_locco/soundon.png">
-        <img onclick="showInstructions()" class="footericon" src="./img_pollo_locco/controllbtn.png">
-        <img onclick="showpolicy()" class="footericon" src="./img_pollo_locco/info.png">
-
+    <footer id="footerid">
+        <img id="soundid" class="footericon" onclick="mute()" src="./img_pollo_locco/soundon.png">
+        <img id="instruction2" onclick="showInstructions()" class="footericon2" src="./img_pollo_locco/controllbtn.png">
+        <img id="policyid" onclick="showpolicy()" class="footericon" src="./img_pollo_locco/info.png">
     </footer>
 
 </body>

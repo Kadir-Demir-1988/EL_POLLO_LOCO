@@ -1,6 +1,6 @@
 class Character extends MovableObject {
   world;
-  y = 80;
+  y = 100;
   height = 250;
   width = 140;
   speed = 8;
@@ -81,12 +81,12 @@ class Character extends MovableObject {
     right: 20,
   };
 
-/**
- * Initializes the Character instance by loading images for various states
- * such as walking, jumping, dead, hurt, idle, and sleep. It also applies
- * gravity and starts animations for the character. Additionally, it sets
- * the character to idle and long idle modes.
- */
+  /**
+   * Initializes the Character instance by loading images for various states
+   * such as walking, jumping, dead, hurt, idle, and sleep. It also applies
+   * gravity and starts animations for the character. Additionally, it sets
+   * the character to idle and long idle modes.
+   */
   constructor() {
     super().loadImage("img_pollo_locco/img/2_character_pepe/2_walk/W-21.png");
     this.loadImages(this.IMAGES_WALKING);
@@ -145,14 +145,14 @@ class Character extends MovableObject {
     this.handleWalkingAnimation();
   }
 
-/**
- * Handles the character's movement to the right.
- * 
- * This function checks if the right arrow key is pressed and the character's
- * position is within the level's boundaries. If true, it moves the character
- * to the right, sets the direction flag, plays the walking sound, and pauses
- * the snore sound.
- */
+  /**
+   * Handles the character's movement to the right.
+   * 
+   * This function checks if the right arrow key is pressed and the character's
+   * position is within the level's boundaries. If true, it moves the character
+   * to the right, sets the direction flag, plays the walking sound, and pauses
+   * the snore sound.
+   */
   handleMoveRight() {
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
       this.moveRight();
@@ -249,12 +249,12 @@ class Character extends MovableObject {
     }
   }
 
-/**
- * Makes the character jump by setting the vertical speed and jump state.
- * 
- * This function sets the character's vertical speed to initiate a jump and
- * marks the character as currently jumping.
- */
+  /**
+   * Makes the character jump by setting the vertical speed and jump state.
+   * 
+   * This function sets the character's vertical speed to initiate a jump and
+   * marks the character as currently jumping.
+   */
   jump() {
     this.speedY = 25;
     this.isJumping = true;
@@ -308,7 +308,7 @@ class Character extends MovableObject {
    * If the amount of coins exceeds 100, it is capped at 100.
    */
   collectCoin() {
-    this.amountOfCoins += 10;
+    this.amountOfCoins += 20;
     if (this.amountOfCoins > 100) {
       this.amountOfCoins = 100;
     }
@@ -319,7 +319,7 @@ class Character extends MovableObject {
    * If the amount of bottles exceeds 100, it is capped at 100.
    */
   collectBottle() {
-    this.amountOfBottle += 10;
+    this.amountOfBottle += 1;
     if (this.amountOfBottle > 100) {
       this.amountOfBottle = 100;
     }

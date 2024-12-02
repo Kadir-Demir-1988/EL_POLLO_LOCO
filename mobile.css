@@ -1,23 +1,24 @@
-@media (max-width: 680px) and (orientation: landscape) {
+@media (max-width: 1365px) and (orientation: landscape) {
     .mobilecontrol {
-        display: flex !important;
+        display: flex;
     }
 
     .gamescreen {
-        height: 64vh !important;
+        height: 64vh;
         width: 56vw;
     }
 
     .start_screen {
-        height: 64vh !important;
+        height: 64vh;
         width: 56vw;
+
     }
 
     h1 {
         font-size: 24px;
     }
 
-    footer {
+    #footerid {
         width: 56vw;
         border-radius: 16px;
     }
@@ -147,21 +148,12 @@
 
 }
 
-@media (max-width: 680px) and (orientation: portrait) {
-    .orientation-warning {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 550px !important;
-        height: 100%;
-
-    }
-}
-
-@media (min-width: 681px) and (max-width: 1024px) and (orientation: landscape) {
+@media (max-width: 1366px) and (orientation: landscape) {
     .mobilecontrol {
-        display: flex !important;
+        display: flex;
     }
+
+
 
     .policy {
         display: none;
@@ -181,6 +173,30 @@
         left: 0;
         width: 550px;
         height: 100%;
+    }
 
+
+}
+
+@media (orientation: portrait) {
+    .orientation-warning {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100%;
+
+    }
+}
+
+@media (min-width: 1367px) and (orientation: landscape) {
+    .mobilecontrol {
+        display: none;
+    }
+}
+
+@media (device-width: 1366px) and (device-height: 1024px) and (orientation: landscape) {
+    .mobilecontrol {
+        display: flex !important;
     }
 }

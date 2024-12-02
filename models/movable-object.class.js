@@ -5,7 +5,7 @@ class MovableObject extends DrawableObject {
   acceleration = 2;
   energy = 100;
   lastHit = 0;
-  
+
   offset = {
     top: 0,
     bottom: 0,
@@ -54,10 +54,10 @@ class MovableObject extends DrawableObject {
    */
   isColliding(mo) {
     return (
-      this.x + this.width - this.offset.right > mo.x + mo.offset.left && 
-      this.x + this.offset.left < mo.x + mo.width - mo.offset.right && 
-      this.y + this.height - this.offset.bottom > mo.y + mo.offset.top && 
-      this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom 
+      this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+      this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+      this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+      this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
     );
   }
 
@@ -72,23 +72,14 @@ class MovableObject extends DrawableObject {
     }
   }
 
-  /**
-   * Increases the amount of bottles the character has by 10.
-   * If the amount of bottles exceeds 100, it is capped at 100.
-   */
-  collectBottle() {
-    this.amountOfBottle += 10;
-    if (this.amountOfBottle > 100) {
-      this.amountOfBottle = 100;
-    }
-  }
 
-/**
- * Reduces the energy of the object by 5 and updates the last hit timestamp.
- * 
- * If the energy falls below 0, it is set to 0. Otherwise, the last hit
- * timestamp is updated to the current time.
- */
+
+  /**
+   * Reduces the energy of the object by 5 and updates the last hit timestamp.
+   * 
+   * If the energy falls below 0, it is set to 0. Otherwise, the last hit
+   * timestamp is updated to the current time.
+   */
   hit() {
     this.energy -= 5;
     if (this.energy < 0) {
@@ -98,41 +89,41 @@ class MovableObject extends DrawableObject {
     }
   }
 
-/**
- * Checks if the object is currently hurt.
- * 
- * This function determines whether the object is still considered hurt based on
- * the time elapsed since the last hit. If the time passed since the last hit is
- * less than 500 milliseconds, the object is considered hurt.
- *
- * @returns {boolean} True if the object is hurt, otherwise false.
- */
+  /**
+   * Checks if the object is currently hurt.
+   * 
+   * This function determines whether the object is still considered hurt based on
+   * the time elapsed since the last hit. If the time passed since the last hit is
+   * less than 500 milliseconds, the object is considered hurt.
+   *
+   * @returns {boolean} True if the object is hurt, otherwise false.
+   */
   isHurt() {
     let timepassed = new Date().getTime() - this.lastHit;
     return timepassed < 500;
   }
 
-/**
- * Checks if the object is dead.
- * 
- * This function returns true if the object's energy is zero, indicating that
- * the object is dead.
- *
- * @returns {boolean} True if the object is dead, otherwise false.
- */
+  /**
+   * Checks if the object is dead.
+   * 
+   * This function returns true if the object's energy is zero, indicating that
+   * the object is dead.
+   *
+   * @returns {boolean} True if the object is dead, otherwise false.
+   */
   isDead() {
     return this.energy == 0;
   }
-  
-/**
- * Cycles through the provided images to animate the object.
- * 
- * This function selects an image from the provided array based on the
- * current image index, updates the object's image to the selected image,
- * and increments the current image index for the next cycle.
- *
- * @param {string[]} images - An array of image paths to cycle through for the animation.
- */
+
+  /**
+   * Cycles through the provided images to animate the object.
+   * 
+   * This function selects an image from the provided array based on the
+   * current image index, updates the object's image to the selected image,
+   * and increments the current image index for the next cycle.
+   *
+   * @param {string[]} images - An array of image paths to cycle through for the animation.
+   */
   playAnimation(images) {
     let i = this.currentImage % images.length;
     let path = images[i];
@@ -155,25 +146,25 @@ class MovableObject extends DrawableObject {
    */
   playOnce(images, totalDuration) {
     this.currentImage = 0;
-    const timePerFrame = totalDuration / images.length; 
+    const timePerFrame = totalDuration / images.length;
     const animationInterval = setInterval(() => {
       if (this.currentImage < images.length) {
         let path = images[this.currentImage];
         this.img = this.imageCache[path];
         this.currentImage++;
       } else {
-        clearInterval(animationInterval); 
+        clearInterval(animationInterval);
       }
     }, timePerFrame);
   }
 
-/**
- * Moves the object to the right by increasing its x coordinate by the
- * object's speed.
- * 
- * This function updates the object's position to the right and records
- * the time of the last action.
- */
+  /**
+   * Moves the object to the right by increasing its x coordinate by the
+   * object's speed.
+   * 
+   * This function updates the object's position to the right and records
+   * the time of the last action.
+   */
   moveRight() {
     this.x += this.speed;
     this.lastActionTime = new Date().getTime();
@@ -191,6 +182,8 @@ class MovableObject extends DrawableObject {
     this.lastActionTime = new Date().getTime();
   }
 
+
+
   /**
    * Kills an enemy that the object jumps on.
    * 
@@ -202,15 +195,15 @@ class MovableObject extends DrawableObject {
     enemy.die();
   }
 
-/**
- * Continuously moves the object within a specified range.
- * 
- * This function uses an interval to move the object left or right based on its
- * current position and direction. If the object's x-coordinate is less than 350,
- * it moves to the right and changes its direction flag. If the x-coordinate is
- * greater than 1400, it moves to the left and resets the direction flag. The 
- * movement is updated every 60 frames per second.
- */
+  /**
+   * Continuously moves the object within a specified range.
+   * 
+   * This function uses an interval to move the object left or right based on its
+   * current position and direction. If the object's x-coordinate is less than 350,
+   * it moves to the right and changes its direction flag. If the x-coordinate is
+   * greater than 1400, it moves to the left and resets the direction flag. The 
+   * movement is updated every 60 frames per second.
+   */
   move() {
     setInterval(() => {
       if (this.x < 350) {

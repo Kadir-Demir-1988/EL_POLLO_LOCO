@@ -72,9 +72,10 @@ class Endboss extends MovableObject {
     this.x = 2600;
     this.id = "endboss";
     this.energy = 100;
-    this.speed = 0.5;
+    this.speed = 1;
     this.walkLeft();
     this.animate();
+    this.isDead = false;
   }
 
 /**
@@ -88,7 +89,6 @@ class Endboss extends MovableObject {
   takeDamage(amount) {
     this.energy = Math.max(0, this.energy - amount);
     this.lastHit = new Date().getTime();
-    console.log(`Endboss nimmt Schaden: ${amount}. Verbleibende Energie: ${this.energy}`);
   }
 
   /**
@@ -107,11 +107,13 @@ class Endboss extends MovableObject {
     }, 200);
 
     this.playAniInt = setInterval(() => {
-      if (!this.isDead()) {
+      
         this.playAnimation(this.IMAGES_WALKING);
-      }
+      
     }, 200);
   }
+
+
 
   /**
    * Animates the Endboss by playing a specific animation based on its state.
@@ -122,7 +124,7 @@ class Endboss extends MovableObject {
    */
   animate() {
     this.animateInt = setInterval(() => {
-      if (this.isDead()) {
+      if (this.isDead === true) {
         this.playdie();
       } else if (this.isHurt()) {
         this.playHurt();
@@ -135,6 +137,10 @@ class Endboss extends MovableObject {
       }
     }, 200);
   }
+
+//   isDead() {
+//     return this.energy == 0;
+// }
 
   /**
    * Animates the Endboss by playing the hurt animation when it is hurt.

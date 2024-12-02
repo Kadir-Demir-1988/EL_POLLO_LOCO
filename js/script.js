@@ -55,6 +55,8 @@ function startGame() {
     toggleDisplay("startscreen", false);
     toggleDisplay("canvas", true);
     toggleDisplay("gameover", false);
+    toggleDisplay("instruction2", false);
+    toggleDisplay("policyid", false);
     bg_music.loop = true;
     bg_music.volume = 0.1;
     bg_music.play();
@@ -69,7 +71,6 @@ function restartGame() {
     toggleDisplay("gameover", false);
     toggleDisplay("canvas", true);
     endGame();
-    init();
 }
 
 
@@ -82,7 +83,8 @@ function goToStartMenu() {
     toggleDisplay("startscreen", true);
     toggleDisplay("canvas", false);
     toggleDisplay("win", false);
-    // endGame();
+    toggleDisplay("instruction2", true);
+    toggleDisplay("policyid", true);
 }
 
 /**
@@ -135,6 +137,8 @@ function hidepolicy() {
     toggleDisplay("startscreen", true);
     document.getElementById("impressum").style.display = "none";
 }
+
+
 
 window.addEventListener("resize", checkOrientation);
 window.addEventListener("orientationchange", checkOrientation);
