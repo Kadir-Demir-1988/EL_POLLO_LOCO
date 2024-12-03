@@ -182,8 +182,6 @@ class MovableObject extends DrawableObject {
     this.lastActionTime = new Date().getTime();
   }
 
-
-
   /**
    * Kills an enemy that the object jumps on.
    * 

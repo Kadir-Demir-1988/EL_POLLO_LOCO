@@ -18,6 +18,8 @@ class ThrowableObject extends MovableObject {
     "img_pollo_locco/img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
   ]
 
+  direction;
+
   offset = {
     top: 5,
     bottom: 5,
@@ -49,6 +51,8 @@ class ThrowableObject extends MovableObject {
     this.height = 60;
     this.width = 50;
     this.character = character;
+    this.direction = character.otherDirection;
+
     this.throw();
     this.animateRotation();
   }
@@ -69,7 +73,11 @@ class ThrowableObject extends MovableObject {
     }
     this.applyGravity();
     this.throwInterval = setInterval(() => {
-      this.x += 10;
+      if(this.direction){
+        this.x -= 10;
+      } else {
+        this.x += 10;
+      }
     }, 50);
   }
 

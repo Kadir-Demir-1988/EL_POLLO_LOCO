@@ -1,15 +1,15 @@
-
-@media  (max-width: 1024px) and (orientation: landscape) {
-    .mobilecontrol {
+@media (max-width: 1023px) and (orientation: landscape) {
+    
+    .mobilecontrol{
         display: flex !important;
     }
 
-    h1{
+    h1 {
         margin: 4px;
     }
 
     #canvas {
-        
+
         width: 54vw !important;
     }
 
@@ -21,7 +21,6 @@
     .start_screen {
         height: 64vh;
         width: 56vw;
-
     }
 
     h1 {
@@ -160,9 +159,7 @@
 
 }
 
-
-
-@media (max-width: 911px) and (orientation: portrait) {
+@media (orientation: portrait) {
     .orientation-warning {
         position: fixed;
         top: 0;
@@ -173,3 +170,8 @@
     }
 }
 
+@media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) and (orientation: landscape) {
+    .mobilecontrol {
+        display: flex;
+    }
+}

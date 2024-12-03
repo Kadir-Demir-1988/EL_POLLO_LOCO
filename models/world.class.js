@@ -124,8 +124,6 @@ class World {
     }
   }
 
-
-
   /**
    * Checks for collisions between the character and enemies, and between bottles and enemies.
    * 
@@ -152,10 +150,12 @@ class World {
   checkCharacterEnemyCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.characterJumpToKill(enemy)) {
-        enemy.die();
-        setTimeout(() => {
-          enemy.isSplicable = true;
-        }, 1000);
+          if(enemy instanceof Chicken || enemy instanceof Chick){
+          enemy.die();
+          setTimeout(() => {
+            enemy.isSplicable = true;
+          }, 1000);
+        }
       } else if (this.characterCollidingWithEnemies(enemy) && !enemy.isDead) {
         this.characterGetsHurt();
       }
