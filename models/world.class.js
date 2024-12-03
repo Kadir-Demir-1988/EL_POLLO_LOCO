@@ -71,7 +71,7 @@ class World {
       this.checkThrowObjects();
       this.checkEndbossHealth();
       this.winScreen();
-    }, 200);
+    }, 50);
   }
 
   /**
@@ -103,8 +103,9 @@ class World {
    * If the character has no bottles, it shakes the bottle bar.
    */
   checkThrowObjects() {
-    if (this.keyboard.D) {
+    if (this.keyboard.D && !this.hasThrown) {
       if (this.character.amountOfBottle > 0) {
+        this.hasThrown = true;
         let bottle = new ThrowableObject(
           this.character.x + 100,
           this.character.y + 100,
@@ -114,10 +115,16 @@ class World {
         this.character.amountOfBottle--;
         this.bottleBar.setPercantage((this.character.amountOfBottle / 5) * 100);
       } else {
+        this.hasThrown = true;
         this.bottleBar.shake();
       }
+      setTimeout(() => {
+        this.hasThrown = false;
+      }, 1000);
     }
   }
+
+
 
   /**
    * Checks for collisions between the character and enemies, and between bottles and enemies.
@@ -196,7 +203,7 @@ class World {
     });
   }
 
-  
+
   /**
    * Checks if the character is colliding with an enemy.
    * 
@@ -346,8 +353,8 @@ class World {
         this.character.amountOfBottle++;
         this.bottle_sound.play();
         this.level.bottles.splice(i, 1);
-        let percentage = this.character.amountOfBottle * 20; 
-        this.bottleBar.setPercantage(percentage); 
+        let percentage = this.character.amountOfBottle * 20;
+        this.bottleBar.setPercantage(percentage);
       }
     });
   }

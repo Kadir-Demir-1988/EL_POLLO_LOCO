@@ -156,7 +156,7 @@ class Endboss extends MovableObject {
     clearInterval(this.moveleftInt);
     clearInterval(this.playAniInt);
     this.boss_sound.play();
-    this.playOnce(this.IMAGES_HURT, 1200);
+    this.playOnce(this.IMAGES_HURT, 1000);
     setTimeout(() => {
       this.hurtAnimationPlayed = false;
       this.walkLeft();
@@ -175,7 +175,7 @@ class Endboss extends MovableObject {
  */
   playdie() {
     this.speed = 0;
-    this.playOnce(this.IMAGES_DEAD, 1200);
+    this.playOnce(this.IMAGES_DEAD, 1000);
 
     setTimeout(() => {
       this.y = -1000;
@@ -202,8 +202,9 @@ class Endboss extends MovableObject {
     clearInterval(this.moveleftInt);
     clearInterval(this.playAniInt);
     this.energy -= 1;
+    this.speed = 4;
     this.boss_alarm.play();
-    this.playOnce(this.IMAGES_ALERT, 3200);
+    this.playOnce(this.IMAGES_ALERT, 1800);
     setTimeout(() => {
       this.alertActive = false;
       this.walkLeft();
@@ -228,7 +229,8 @@ class Endboss extends MovableObject {
     clearInterval(this.moveleftInt);
     clearInterval(this.playAniInt);
     this.energy -= 1;
-    this.playOnce(this.IMAGES_ATTACK, 3200);
+    this.speed = 6;
+    this.playOnce(this.IMAGES_ATTACK, 2800);
     setTimeout(() => {
       this.alertattack = false;
       this.walkLeft();

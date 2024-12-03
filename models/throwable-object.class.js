@@ -66,7 +66,6 @@ class ThrowableObject extends MovableObject {
     if (this.character) {
       this.character.lastActionTime = new Date().getTime();
       this.character.playAnimation(this.character.IMAGES_WALKING);
-      
     }
     this.applyGravity();
     this.throwInterval = setInterval(() => {
@@ -74,12 +73,12 @@ class ThrowableObject extends MovableObject {
     }, 50);
   }
 
-/**
- * Animates the rotation of the throwable object.
- * 
- * This method cycles through the rotation images of the bottle
- * at a 100ms interval to create a continuous rotation animation.
- */
+  /**
+   * Animates the rotation of the throwable object.
+   * 
+   * This method cycles through the rotation images of the bottle
+   * at a 100ms interval to create a continuous rotation animation.
+   */
   animateRotation() {
     this.rotationInterval = setInterval(() => {
       this.playAnimation(this.IMAGES_BOTTLE_ROTATION);

@@ -59,7 +59,7 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    max-height: 480px !important;
 
 }
 
@@ -134,7 +134,7 @@ h3 {
 
 .start_screen {
     background-image: url("./img_pollo_locco/img/9_intro_outro_screens/start/startscreen_1.png");
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
@@ -157,15 +157,16 @@ h3 {
 
 .mobilecontrol {
     height: 200px;
-    width: 80px;
+    width: 7%;
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
     border: 1px solid black;
     border-radius: 16px;
-    margin: 24px;
+    margin: 16px;
     background-color: lightgoldenrodyellow;
+    padding: 8px;
 }
 
 .mobileicon {
@@ -206,7 +207,8 @@ footer {
     width: 720px;
     height: 50px;
     background-color: rgb(153, 68, 9);
-    ;
+    border-radius: 16px;
+    margin: 8px;
 }
 
 .footericon {
